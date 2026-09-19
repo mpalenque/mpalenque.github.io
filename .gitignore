@@ -1,0 +1,57 @@
+.DS_Store
+tmp_pdf_sheets/
+tmp_pdf_sheets_immersive/
+Immersive portfolio.pdf
+assets/videos/*.mp4
+assets/videos/*.mov
+assets/videos/*.MOV
+
+# Keep the GitHub Pages site on the default mpalenque.github.io domain.
+CNAME
+
+# Local drafts and unrelated project material.
+index2.html
+index3.html
+arte.html
+styles.css
+script.js
+ironside/
+assets/ch/
+assets/videos/theater.jpg
+
+# Publish only the media used by index.html.
+assets/portfolio/*
+!assets/portfolio/adidas-nmd-still.jpg
+!assets/portfolio/art-recap.jpg
+!assets/portfolio/bm-venezia-slide-14-left.webp
+!assets/portfolio/bm-venezia-slide-14-right.webp
+!assets/portfolio/bm-venezia-slide-15-1.webp
+!assets/portfolio/bm-venezia-slide-15-2.webp
+!assets/portfolio/bm-venezia-slide-15-3.webp
+!assets/portfolio/bright-moments.webp
+!assets/portfolio/colapso.webp
+!assets/portfolio/verano-tecnopolis.webp
+
+assets/videos/comp/*
+!assets/videos/comp/AI.webm
+!assets/videos/comp/BOSQUE.webm
+!assets/videos/comp/coloso.webm
+!assets/videos/comp/coloso2.webm
+!assets/videos/comp/effect.webm
+!assets/videos/comp/laser.webm
+!assets/videos/comp/particles.webm
+!assets/videos/comp/perfo.webm
+!assets/videos/comp/reelold.webm
+!assets/videos/comp/water.webm
+
+assets/videos/posters/*
+!assets/videos/posters/AI.jpg
+!assets/videos/posters/BOSQUE.jpg
+!assets/videos/posters/coloso.jpg
+!assets/videos/posters/coloso2.jpg
+!assets/videos/posters/effect.jpg
+!assets/videos/posters/laser.jpg
+!assets/videos/posters/particles.jpg
+!assets/videos/posters/perfo.jpg
+!assets/videos/posters/reelold.jpg
+!assets/videos/posters/water.jpg

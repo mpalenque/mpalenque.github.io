@@ -1,0 +1,1425 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, viewport-fit=cover" />
+    <title>Manuel Palenque — Artist</title>
+    <meta
+      name="description"
+      content="Manuel Palenque is an artist in Buenos Aires. Sound and visual performance made in real time — Colapso, Verano Tecnópolis, Adidas NMD, Bright Moments — and Dataraiz, a media lab for art, science and technology."
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400&family=JetBrains+Mono:wght@400&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="preload" href="./assets/portfolio/colapso.webp" as="image" />
+    <style>
+      :root {
+        color-scheme: dark;
+        --bg: #000;
+        --ink: #f2f4f8;
+        --ink-88: rgba(242, 244, 248, 0.88);
+        --ink-72: rgba(242, 244, 248, 0.72);
+        --ink-62: rgba(242, 244, 248, 0.62);
+        --ink-52: rgba(242, 244, 248, 0.52);
+        --rule: rgba(242, 244, 248, 0.08);
+        --rule-hi: rgba(242, 244, 248, 0.24);
+        --seam: rgba(242, 244, 248, 0.085);
+        --gutter: clamp(1.25rem, 2.4vw, 2.75rem);
+        --seam-pad: clamp(1.1rem, 1.8vw, 2rem);
+        --s1: 0.5rem;
+        --s2: 1rem;
+        --s3: 1.75rem;
+        --s4: 3rem;
+        --s5: 5rem;
+        --s6: clamp(5rem, 9vw, 8.5rem);
+        --ease: cubic-bezier(0.22, 1, 0.36, 1);
+      }
+      * { box-sizing: border-box; }
+      html, body { margin: 0; min-height: 100%; }
+      html { background: #000; }
+      body {
+        background: var(--bg);
+        color: var(--ink);
+        font-family: "Inter", system-ui, -apple-system, sans-serif;
+        font-weight: 300;
+        min-height: 100vh;
+        overflow-x: hidden;
+        -webkit-font-smoothing: antialiased;
+      }
+      #perf, #stats, .stats, .fps-meter, [data-fps-meter] { display: none !important; }
+
+      /* ---------- header ---------- */
+      .header {
+        position: relative;
+        width: 100%;
+        height: clamp(460px, 68svh, 820px);
+        background: #000;
+        overflow: hidden;
+      }
+      .header canvas {
+        position: absolute;
+        inset: 0;
+        display: block;
+        width: 100%;
+        height: 100%;
+        touch-action: none;
+      }
+      .header::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        pointer-events: none;
+        background: linear-gradient(180deg,
+          rgba(0,0,0,0) 0%, rgba(0,0,0,0) 6%, rgba(0,0,0,0.18) 24%,
+          rgba(0,0,0,0.62) 54%, rgba(0,0,0,0.88) 78%, rgba(0,0,0,0.92) 100%);
+      }
+      .hero {
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: clamp(1.1rem, 3.5vh, 2.4rem);
+        z-index: 1;
+        display: grid;
+        grid-template-columns: 33.3333% minmax(0, 1fr);
+        align-items: end;
+      }
+      .hero__name {
+        min-width: 0;
+        padding-left: var(--gutter);
+      }
+      .wordmark {
+        --wordmark-size: clamp(3.2rem, 9vw, 7rem);
+        margin: 0;
+        font-family: "Inter", system-ui, sans-serif;
+        font-weight: 200;
+        font-size: var(--wordmark-fit, var(--wordmark-size));
+        letter-spacing: -0.083em;
+        line-height: 0.88;
+        text-transform: uppercase;
+        color: var(--ink);
+        width: max-content;
+      }
+      .wordmark-line { display: block; white-space: nowrap; }
+      .wordmark-line--last { display: inline-block; }
+      .wordmark-last { display: inline-block; }
+      .hero__line {
+        margin: 0;
+        padding: 0 var(--gutter) 0.18em var(--seam-pad);
+        max-width: 34em;
+        font-size: clamp(1rem, 1.25vw, 1.18rem);
+        font-weight: 300;
+        letter-spacing: -0.004em;
+        line-height: 1.55;
+        color: var(--ink-72);
+      }
+
+      /* ---------- the axis ---------- */
+      main {
+        position: relative;
+        width: 100%;
+        margin: 0;
+        padding: 0;
+      }
+      .seams {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 150vh;
+        z-index: 0;
+        pointer-events: none;
+        background: linear-gradient(90deg, transparent calc(33.3333% - 0.5px), var(--seam) calc(33.3333% - 0.5px),
+                                    var(--seam) calc(33.3333% + 0.5px), transparent calc(33.3333% + 0.5px));
+        -webkit-mask-image: linear-gradient(180deg, #000 0, #000 18vh, rgba(0,0,0,0.45) 70vh, rgba(0,0,0,0) 150vh);
+                mask-image: linear-gradient(180deg, #000 0, #000 18vh, rgba(0,0,0,0.45) 70vh, rgba(0,0,0,0) 150vh);
+      }
+      .row {
+        position: relative;
+        z-index: 1;
+        display: grid;
+        grid-template-columns: 33.3333% minmax(0, 1fr);
+      }
+      .rail {
+        padding-left: var(--gutter);
+        padding-right: var(--seam-pad);
+        text-align: right;
+      }
+      .col {
+        padding-left: var(--seam-pad);
+        padding-right: var(--gutter);
+      }
+      .bleed {
+        grid-column: 2 / -1;
+        padding-left: var(--seam-pad);
+        padding-right: var(--gutter);
+      }
+      .section { padding-block: var(--s6); }
+      .rail-label {
+        margin: 0;
+        font-family: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+        font-size: 10.5px;
+        font-weight: 400;
+        letter-spacing: 0.22em;
+        line-height: 1.6;
+        text-transform: uppercase;
+        color: var(--ink-52);
+      }
+      .rail-data {
+        margin: var(--s2) 0 0;
+        font-family: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+        font-size: 11px;
+        font-weight: 400;
+        letter-spacing: 0.05em;
+        line-height: 1.95;
+        color: var(--ink-52);
+        font-variant-numeric: tabular-nums;
+      }
+      .body {
+        margin: 0 0 var(--s3);
+        max-width: 33em;
+        font-size: 1.0625rem;
+        font-weight: 300;
+        letter-spacing: 0.002em;
+        line-height: 1.72;
+        color: var(--ink-72);
+      }
+      .body:last-child { margin-bottom: 0; }
+      .caption {
+        margin: var(--s1) 0 0;
+        font-family: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+        font-size: 11px;
+        font-weight: 400;
+        letter-spacing: 0.14em;
+        line-height: 1.6;
+        text-transform: uppercase;
+        color: var(--ink-52);
+      }
+      a {
+        color: inherit;
+        text-decoration: underline;
+        text-underline-offset: 0.28em;
+        text-decoration-thickness: 1px;
+        text-decoration-color: rgba(242, 244, 248, 0.26);
+        transition: text-decoration-color 150ms ease;
+      }
+      a:hover, a:focus-visible { text-decoration-color: var(--ink); }
+
+      /* ---------- index ---------- */
+      .index-block { margin-top: var(--s4); }
+      .index-block:first-of-type { margin-top: 0; }
+      .index-row {
+        position: relative;
+        isolation: isolate;
+        overflow: hidden;
+        border-top: 1px solid var(--rule);
+        padding-block: 0.9rem;
+        align-items: baseline;
+        text-decoration: none;
+        transition: border-color 460ms var(--ease), transform 460ms var(--ease);
+      }
+      .index-row::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        z-index: 0;
+        background: var(--ink);
+        transform: translate3d(-101%, 0, 0);
+        transition: transform 600ms var(--ease);
+        pointer-events: none;
+      }
+      .index-row > * { position: relative; z-index: 1; }
+      .index-row:last-child { border-bottom: 1px solid var(--rule); }
+      a.index-row:hover, a.index-row:focus-within { border-top-color: var(--rule-hi); }
+      a.index-row:hover, a.index-row:focus-visible {
+        border-top-color: var(--ink);
+        transform: translate3d(0.18rem, 0, 0);
+      }
+      a.index-row:hover::before, a.index-row:focus-visible::before { transform: translate3d(0, 0, 0); }
+      a.index-row.is-hot {
+        border-top-color: var(--ink);
+        transform: translate3d(0.18rem, 0, 0);
+      }
+      a.index-row.is-hot::before { transform: translate3d(0, 0, 0); }
+      .index-year {
+        font-family: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+        font-size: 12px;
+        font-weight: 400;
+        letter-spacing: 0.04em;
+        line-height: 1;
+        color: var(--ink-52);
+        font-variant-numeric: tabular-nums;
+      }
+      .index-cell {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+        align-items: baseline;
+        gap: 0 var(--seam-pad);
+      }
+      .index-title {
+        font-size: clamp(1.05rem, 1.25vw, 1.25rem);
+        font-weight: 300;
+        letter-spacing: -0.02em;
+        line-height: 1.2;
+        color: var(--ink-88);
+        transition: color 420ms var(--ease);
+      }
+      a.index-row:hover .index-title,
+      a.index-row:focus-within .index-title { color: var(--ink); }
+      a.index-row:hover .index-title,
+      a.index-row:focus-visible .index-title,
+      a.index-row.is-hot .index-title { color: #000; }
+      .index-medium {
+        font-family: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+        font-size: 11px;
+        font-weight: 400;
+        letter-spacing: 0.02em;
+        line-height: 1.6;
+        text-transform: lowercase;
+        color: var(--ink-52);
+        transition: color 420ms var(--ease);
+      }
+      a.index-row:hover .index-year, a.index-row:focus-visible .index-year,
+      a.index-row:hover .index-medium, a.index-row:focus-visible .index-medium,
+      a.index-row:hover .index-note, a.index-row:focus-visible .index-note,
+      a.index-row.is-hot .index-year, a.index-row.is-hot .index-medium,
+      a.index-row.is-hot .index-note { color: rgba(5, 7, 11, 0.62); }
+      .index-note {
+        grid-column: 1 / -1;
+        margin: 0.45rem 0 0;
+        max-width: 34em;
+        font-size: 0.94rem;
+        font-weight: 300;
+        line-height: 1.6;
+        color: var(--ink-62);
+      }
+      /* commissioned rail thumbnail */
+      .rail > .index-year { display: block; }
+      .cthumb {
+        display: block;
+        margin: 0.7rem 0 0 auto;
+        width: clamp(110px, 12vw, 190px);
+        aspect-ratio: 16 / 10;
+        object-fit: cover;
+        background: var(--bg);
+        filter: saturate(0.94) contrast(1.04) brightness(0.94);
+      }
+
+      /* ---------- plates ---------- */
+      .plate { padding-block: var(--s6); }
+      .plate > .rail { grid-row: 1 / -1; }
+      .plate__title {
+        margin: 0 0 var(--s3);
+        font-size: clamp(1.45rem, 2.1vw, 2rem);
+        font-weight: 300;
+        letter-spacing: -0.03em;
+        line-height: 1.12;
+        color: var(--ink);
+      }
+      .plate__media { margin: var(--s4) 0 0; }
+      .plate__media:first-child { margin-top: 0; }
+      .plate__media img {
+        display: block;
+        width: 100%;
+        height: auto;
+        filter: saturate(0.94) contrast(1.04) brightness(0.94);
+      }
+      .plate__media.bleed { margin-top: var(--s5); }
+      .plate__media.bleed img { width: 100%; }
+      .plate__media.bleed.work-recap {
+        margin-top: var(--s4);
+        margin-left: 33.3333%;
+      }
+      .pair {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 1px;
+        background: var(--rule);
+      }
+      .pair img { width: 100%; }
+
+      /* ---------- dataraiz ---------- */
+      .motto {
+        margin: 0;
+        font-size: clamp(2.2rem, 5vw, 4rem);
+        font-weight: 200;
+        letter-spacing: -0.045em;
+        line-height: 1;
+        color: var(--ink);
+      }
+      .gloss {
+        margin: var(--s2) 0 0;
+        font-family: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+        font-size: 11px;
+        font-weight: 400;
+        letter-spacing: 0.22em;
+        text-transform: uppercase;
+        color: var(--ink-52);
+      }
+      .spanish {
+        margin: var(--s3) 0 0;
+        max-width: 33em;
+        font-size: 1.0625rem;
+        font-weight: 300;
+        line-height: 1.6;
+        color: var(--ink-62);
+      }
+      .dataraiz-body { margin-top: var(--s3); }
+      .strands { margin-top: var(--s3); }
+      .ciclo-negro {
+        margin-top: var(--s5);
+        padding-top: var(--s4);
+        border-top: 1px solid var(--rule);
+        scroll-margin-top: var(--s3);
+      }
+      .ciclo-negro .plate__title { margin-top: var(--s2); }
+      .entry-media.entry-media--ciclo {
+        width: min(100%, 42rem);
+        aspect-ratio: 4 / 5;
+        margin-top: var(--s3);
+      }
+      .entry-media--ciclo video { object-position: 50% 45%; }
+      .ciclo-negro__link { margin-top: var(--s2); }
+
+      /* ---------- video surfaces (JS contract) ---------- */
+      .entry-media {
+        margin: 0;
+        aspect-ratio: 16 / 9;
+        overflow: hidden;
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: cover;
+      }
+      .entry-media--interactive { cursor: pointer; }
+      .entry-media--adidas {
+        background: #000;
+      }
+      .entry-media--interactive:focus-visible {
+        outline: 1px solid rgba(242, 244, 248, 0.78);
+        outline-offset: 3px;
+      }
+      .entry-media video {
+        display: block;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        filter: saturate(0.94) contrast(1.04) brightness(0.94);
+        background: var(--bg);
+        opacity: 0;
+        transition: opacity 180ms ease;
+      }
+      .entry-media video[data-frame-ready="true"] { opacity: 1; }
+
+      .archive-video-grid {
+        display: grid;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: 1px;
+        margin-left: calc(33.3333% + var(--seam-pad));
+        margin-right: var(--gutter);
+        background: var(--rule);
+      }
+      .archive-section { padding-top: var(--s4); }
+      .archive-video-card {
+        position: relative;
+        display: block;
+        width: 100%;
+        min-width: 0;
+        padding: 0;
+        aspect-ratio: 16 / 10;
+        overflow: hidden;
+        appearance: none;
+        border: 0;
+        border-radius: 0;
+        color: var(--ink);
+        background: var(--bg);
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: cover;
+        cursor: pointer;
+      }
+      .archive-video-card video {
+        display: block;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        filter: saturate(0.86) contrast(1.06) brightness(0.8);
+        opacity: 0;
+        transform: scale(1);
+        transition: opacity 180ms ease, filter 420ms ease, transform 520ms ease;
+      }
+      .archive-video-card video[data-frame-ready="true"] { opacity: 1; }
+      .archive-video-card::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        pointer-events: none;
+        background: linear-gradient(180deg, rgba(0,0,0,0) 0%, rgba(0,0,0,0.06) 52%, rgba(0,0,0,0.28) 100%);
+        transition: opacity 420ms ease;
+      }
+      .archive-video-card:hover video,
+      .archive-video-card:focus-visible video,
+      .archive-video-card.is-previewing video {
+        filter: saturate(1) contrast(1.02) brightness(0.98);
+        transform: scale(1.012);
+      }
+      .archive-video-card:hover::after,
+      .archive-video-card:focus-visible::after,
+      .archive-video-card.is-previewing::after { opacity: 0.4; }
+      .archive-video-card:focus-visible {
+        outline: 1px solid rgba(242, 244, 248, 0.78);
+        outline-offset: -1px;
+      }
+
+      /* ---------- colophon ---------- */
+      .colophon {
+        border-top: 1px solid var(--rule);
+        padding-block: var(--s5) var(--s6);
+      }
+      .colophon-list {
+        margin: 0;
+        font-family: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+        font-size: 11px;
+        font-weight: 400;
+        letter-spacing: 0.12em;
+        line-height: 1.9;
+        color: var(--ink-62);
+      }
+      .colophon-list p { margin: 0; }
+      .colophon-credit {
+        margin-top: var(--s3);
+        max-width: 44em;
+        color: var(--ink-52);
+        text-transform: uppercase;
+      }
+
+      /* ---------- lightbox (unchanged contract) ---------- */
+      .video-lightbox[hidden] { display: none; }
+      .video-lightbox {
+        position: fixed;
+        inset: 0;
+        z-index: 40;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: clamp(1rem, 4vw, 3rem);
+        background: rgba(0, 0, 0, 0.94);
+      }
+      .video-lightbox__panel { width: min(1180px, 100%); }
+      .video-lightbox.is-fullscreen { padding: 0; }
+      .video-lightbox.is-fullscreen .video-lightbox__panel { width: 100%; height: 100%; }
+      .video-lightbox.is-fullscreen .video-lightbox__frame { height: 100%; aspect-ratio: auto; }
+      .video-lightbox.is-fullscreen .video-lightbox__bar {
+        position: absolute;
+        right: clamp(1rem, 3vw, 2rem);
+        bottom: clamp(1rem, 3vw, 2rem);
+      }
+      .video-lightbox__frame {
+        position: relative;
+        aspect-ratio: 16 / 9;
+        overflow: hidden;
+        background: #000;
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: cover;
+      }
+      .video-lightbox__frame video {
+        display: block;
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+        background: #000;
+        opacity: 0;
+        transition: opacity 180ms ease;
+      }
+      .video-lightbox__frame video[data-frame-ready="true"] { opacity: 1; }
+      .video-lightbox__bar {
+        display: flex;
+        justify-content: flex-end;
+        margin-top: var(--s2);
+      }
+      .video-lightbox__actions { display: flex; gap: 1px; }
+      .video-lightbox__button {
+        appearance: none;
+        border: 1px solid var(--rule);
+        background: rgba(242, 244, 248, 0.05);
+        color: var(--ink);
+        padding: 0.7rem 0.95rem;
+        font-family: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+        font-size: 11px;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        cursor: pointer;
+        transition: border-color 150ms ease, background 150ms ease;
+      }
+      .video-lightbox__button:hover,
+      .video-lightbox__button:focus-visible {
+        border-color: var(--rule-hi);
+        background: rgba(242, 244, 248, 0.09);
+      }
+
+      /* ---------- motion ---------- */
+      [data-reveal] {
+        opacity: 0;
+        transform: translateY(8px);
+        transition: opacity 620ms var(--ease), transform 620ms var(--ease);
+      }
+      [data-reveal].is-in { opacity: 1; transform: none; }
+
+      /* ---------- breakpoints ---------- */
+      @media (min-width: 1600px) {
+        .plate__media:not(.bleed) img { max-width: 1100px; }
+      }
+      @media (max-width: 1179px) {
+        .archive-video-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+      }
+      @media (max-width: 900px) {
+        .seams { display: none; }
+        .hero {
+          grid-template-columns: minmax(0, 1fr);
+          gap: var(--s2);
+        }
+        .hero__line { padding-left: var(--gutter); padding-bottom: 0; }
+        .row { grid-template-columns: minmax(0, 1fr); }
+        .rail {
+          text-align: left;
+          padding-right: var(--gutter);
+          margin-bottom: var(--s2);
+        }
+        .plate > .rail { grid-row: auto; }
+        .col { padding-left: var(--gutter); }
+        .bleed {
+          grid-column: 1 / -1;
+          padding-left: var(--gutter);
+          padding-right: var(--gutter);
+        }
+        .plate__media.bleed.work-recap { margin-left: 0; }
+        .rail-label, .rail-data {
+          display: inline;
+          margin: 0;
+        }
+        .rail-data { margin-left: 0.6em; }
+        .rail-data br { display: none; }
+        .rail-data span::before { content: " · "; }
+        .index-cell { grid-template-columns: minmax(0, 1fr); gap: 0.35rem; }
+        .index-row { grid-template-columns: minmax(0, 1fr); }
+        .index-year { display: none; }
+        .index-meta-mobile { display: block; }
+        .index-row > .rail { order: 2; margin-bottom: 0; margin-top: var(--s2); }
+        .cthumb { margin: 0; width: 100%; aspect-ratio: 16 / 9; }
+        .credit-row { grid-template-columns: minmax(0, 1fr); gap: var(--s1); }
+        .archive-video-grid {
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+          margin-left: var(--gutter);
+          margin-right: var(--gutter);
+        }
+      }
+      @media (min-width: 901px) {
+        .index-meta-mobile { display: none; }
+      }
+      @media (hover: none), (pointer: coarse) {
+        a.index-row {
+          -webkit-tap-highlight-color: transparent;
+          touch-action: manipulation;
+        }
+        a.index-row:active {
+          border-top-color: var(--ink);
+          transform: translate3d(0.18rem, 0, 0);
+        }
+        a.index-row:active::before { transform: translate3d(0, 0, 0); }
+        a.index-row:active .index-title { color: #000; }
+        a.index-row:active .index-year,
+        a.index-row:active .index-medium,
+        a.index-row:active .index-note { color: rgba(5, 7, 11, 0.62); }
+      }
+      @media (max-width: 640px) {
+        :root { --gutter: 1.25rem; }
+        .header { height: clamp(400px, 62svh, 520px); }
+        .wordmark { --wordmark-size: clamp(2.45rem, 14vw, 4.2rem); }
+      }
+      @media (prefers-reduced-motion: reduce) {
+        [data-reveal], [data-reveal].is-in {
+          opacity: 1 !important;
+          transform: none !important;
+          transition: none !important;
+        }
+        .archive-video-card video { transition: opacity 180ms ease; transform: none; }
+        * { scroll-behavior: auto; }
+      }
+    </style>
+  </head>
+  <body>
+    <header class="header" aria-label="Manuel Palenque">
+      <div class="hero">
+        <div class="hero__name">
+          <h1 class="wordmark" aria-label="MANUEL PALENQUE">
+            <span class="wordmark-line" aria-hidden="true">MANUEL</span>
+            <span class="wordmark-line wordmark-line--last" aria-hidden="true">PALENQU<span class="wordmark-last">E</span></span>
+          </h1>
+        </div>
+      </div>
+    </header>
+
+    <main>
+      <div class="seams" aria-hidden="true"></div>
+
+      <section class="row section" aria-labelledby="practice-title">
+        <div class="rail">
+          <p class="rail-label" id="practice-title">Practice</p>
+          <p class="rail-data">Buenos Aires<br />Born 1986<br />Electronic Arts, UNTREF</p>
+        </div>
+        <div class="col">
+          <p class="body">
+            Creative Technologist and Visual Artist with over 15 years of
+            experience specializing in immersive audiovisual experiences and
+            interactive installations. Recognized for bridging the gap between
+            art and advanced technology. Extensive international experience
+            leading projects and teaching in major hubs including Tokyo, Hong
+            Kong, Berlin, and the United States. Dedicated educator with a
+            strong track record of conducting workshops on interactive
+            technology for universities and cultural institutions worldwide.
+          </p>
+          <p class="body">
+            I make sound and visual performances and I mix both live. Most of
+            what I build runs in real time, which means the music and the
+            picture are written while the show is happening and each one
+            changes the other.
+          </p>
+          <p class="body">
+            I work as an interactive designer and programmer on exhibitions,
+            theatre, live shows and media installations, for my own pieces and
+            for other artists. I produce electronic music for live performance,
+            and sound design for games and film. I run Dataraiz in Buenos Aires.
+          </p>
+          <figure class="plate__media entry-media entry-media--interactive" data-reveal role="button" tabindex="0" aria-label="Open the reel" data-video-src="./assets/videos/comp/reelold.webm" data-video-poster="./assets/videos/posters/reelold.jpg" data-video-title="Manuel Palenque" data-video-volume="0.5">
+            <video data-always-video autoplay muted loop playsinline preload="auto" src="./assets/videos/comp/reelold.webm" poster="./assets/videos/posters/reelold.jpg" aria-label="Reel"></video>
+          </figure>
+        </div>
+      </section>
+
+      <section class="section" aria-labelledby="index-title">
+        <div class="row">
+          <div class="rail"><p class="rail-label" id="index-title">Work</p></div>
+          <div class="col"></div>
+        </div>
+        <div class="index-block">
+          <a class="row index-row" href="#colapso">
+            <span class="rail index-year">2022</span>
+            <span class="col index-cell">
+              <span class="index-title">Colapso</span>
+              <span class="index-medium">live a/v performance</span>
+              <span class="index-medium index-meta-mobile">2022</span>
+            </span>
+          </a>
+          <a class="row index-row" href="#verano">
+            <span class="rail index-year">2023</span>
+            <span class="col index-cell">
+              <span class="index-title">Verano Tecnópolis</span>
+              <span class="index-medium">interactive installations</span>
+              <span class="index-medium index-meta-mobile">2023</span>
+            </span>
+          </a>
+          <a class="row index-row" href="#adidas-nmd">
+            <span class="rail index-year">2022</span>
+            <span class="col index-cell">
+              <span class="index-title">Adidas NMD</span>
+              <span class="index-medium">interactive wall</span>
+              <span class="index-medium index-meta-mobile">2022</span>
+            </span>
+          </a>
+          <a class="row index-row" href="#bright-moments">
+            <span class="rail index-year">2024</span>
+            <span class="col index-cell">
+              <span class="index-title">Bright Moments</span>
+              <span class="index-medium">installation, worldwide</span>
+              <span class="index-medium index-meta-mobile">2024</span>
+            </span>
+          </a>
+          <a class="row index-row" href="#dataraiz-title">
+            <span class="rail index-year">2025</span>
+            <span class="col index-cell">
+              <span class="index-title">Dataraiz</span>
+              <span class="index-medium">medialab</span>
+              <span class="index-medium index-meta-mobile">2025</span>
+            </span>
+          </a>
+          <a class="row index-row" href="#ciclo-negro">
+            <span class="rail index-year">2026</span>
+            <span class="col index-cell">
+              <span class="index-title">Ciclo Negro</span>
+              <span class="index-medium">art &amp; technology festival</span>
+              <span class="index-medium index-meta-mobile">2026</span>
+            </span>
+          </a>
+          <div class="row index-row index-row--credentials">
+            <span class="rail index-year"></span>
+            <span class="col index-cell">
+              <span class="index-title">Shown and taught</span>
+              <span class="index-medium">performances &amp; workshops</span>
+              <span class="index-note">Performed — Tecnópolis · MUTEK Buenos Aires · Beyond Code #2, Tokyo · School of Creative Media, Hong Kong<br />Workshops — NODE Festival, Berlin · TECH LAB PAAK, Tokyo</span>
+            </span>
+          </div>
+        </div>
+        <figure class="plate__media bleed work-recap" data-reveal>
+          <img loading="lazy" decoding="async" src="./assets/portfolio/art-recap.jpg" alt="Recap of generative visual studies and live audiovisual performance" />
+        </figure>
+      </section>
+
+      <article class="plate row" id="colapso">
+        <div class="rail">
+          <p class="rail-label">Colapso</p>
+          <p class="rail-data">2022<br />Live A/V performance<br />Thirty days</p>
+        </div>
+        <div class="col">
+          <h2 class="plate__title">Colapso</h2>
+          <p class="body">
+            An audiovisual performance exploring the concept of collapse
+            through a digital environment interacting with sound.
+          </p>
+          <p class="body">
+            Set of music and image generated in real time. Both systems
+            communicate and respond to each other. Sound transforms the visual
+            landscape generated. As time passes, the visual system starts to
+            collapse and take over control, destroying any balance on the
+            harmonic structures established. The main theme explored is the
+            balance between the progress of human creation, and destructive
+            patterns as unavoidable forces of entropy. The impossibility of
+            abstraction to overcome nature as time passes.
+          </p>
+          <figure class="plate__media entry-media" data-reveal>
+            <video data-viewport-video autoplay muted loop playsinline preload="metadata" src="./assets/videos/comp/perfo.webm" poster="./assets/videos/posters/perfo.jpg" aria-label="Colapso performance footage"></video>
+          </figure>
+          <p class="caption">Performance footage</p>
+        </div>
+        <figure class="plate__media bleed" data-reveal>
+          <img loading="lazy" decoding="async" src="./assets/portfolio/colapso.webp" alt="Colapso live audiovisual performance" />
+        </figure>
+      </article>
+
+      <article class="plate row" id="verano">
+        <div class="rail">
+          <p class="rail-label">Verano Tecnópolis</p>
+          <p class="rail-data">2023<br />Interactive installations</p>
+        </div>
+        <div class="col">
+          <h2 class="plate__title">Verano Tecnópolis</h2>
+          <p class="body">
+            Generative installations running in real time across the park,
+            driven by motion capture. Lights, lasers, projections and LED
+            screens are fed from the same system and answer what people do in
+            front of them.
+          </p>
+          <figure class="plate__media" data-reveal>
+            <img loading="lazy" decoding="async" style="max-width: 1024px" src="./assets/portfolio/verano-tecnopolis.webp" alt="Verano Tecnópolis interactive installation" />
+            <figcaption class="caption">Verano Tecnópolis, 2023</figcaption>
+          </figure>
+        </div>
+      </article>
+
+      <article class="plate row" id="adidas-nmd">
+        <div class="rail">
+          <p class="rail-label">Adidas NMD</p>
+          <p class="rail-data">2022<br />Interactive wall<br />Kinect motion capture</p>
+        </div>
+        <div class="col">
+          <h2 class="plate__title">Adidas NMD</h2>
+          <p class="body">
+            Kinect motion capture turned a retail wall into a surface that
+            notices you. Generative visuals answer whoever walks past, before
+            they've decided to stop and look.
+          </p>
+          <figure class="plate__media entry-media entry-media--adidas" data-reveal>
+            <video data-viewport-video autoplay muted loop playsinline preload="metadata" src="./ADIDAS.mp4" poster="./assets/portfolio/adidas-nmd-still.jpg" aria-label="Adidas NMD interactive wall in motion"></video>
+          </figure>
+          <p class="caption">Adidas NMD, 2022 — interactive wall</p>
+        </div>
+      </article>
+
+      <article class="plate row" id="bright-moments">
+        <div class="rail">
+          <p class="rail-label">Bright Moments</p>
+          <p class="rail-data">Venezia and worldwide<br />Digital art</p>
+        </div>
+        <div class="col">
+          <h2 class="plate__title">Bright Moments</h2>
+          <p class="body">
+            In Venezia the piece sat inside a Renaissance church: a real-time
+            fluid simulation, lighting that answered it, physical water on the
+            floor, and generative music. Everything was calibrated to the
+            building.
+          </p>
+          <p class="body">
+            Worldwide, I did the design, direction and production of their live
+            digital art experiences and the events around them.
+          </p>
+          <figure class="plate__media" data-reveal>
+            <div class="pair">
+              <img loading="lazy" decoding="async" src="./assets/portfolio/bm-venezia-slide-14-left.webp" alt="Venezia installation view" />
+              <img loading="lazy" decoding="async" src="./assets/portfolio/bm-venezia-slide-14-right.webp" alt="Venezia water detail" />
+            </div>
+            <figcaption class="caption">Venezia</figcaption>
+          </figure>
+          <figure class="plate__media" data-reveal>
+            <div class="pair">
+              <img loading="lazy" decoding="async" src="./assets/portfolio/bm-venezia-slide-15-1.webp" alt="Venezia venue exterior" />
+              <img loading="lazy" decoding="async" src="./assets/portfolio/bm-venezia-slide-15-2.webp" alt="Venezia venue interior" />
+            </div>
+            <figcaption class="caption">Venezia, installation views</figcaption>
+          </figure>
+          <figure class="plate__media" data-reveal>
+            <img loading="lazy" decoding="async" style="max-width: 958px" src="./assets/portfolio/bright-moments.webp" alt="Bright Moments live event" />
+            <figcaption class="caption">Worldwide</figcaption>
+          </figure>
+        </div>
+        <figure class="plate__media bleed" data-reveal>
+          <img loading="lazy" decoding="async" src="./assets/portfolio/bm-venezia-slide-15-3.webp" alt="Bright Moments Venezia facade" />
+        </figure>
+      </article>
+
+      <section class="row section" aria-labelledby="dataraiz-title">
+        <div class="rail">
+          <p class="rail-label" id="dataraiz-title">Dataraiz</p>
+          <p class="rail-data">
+            Buenos Aires<br />In person and online<br />
+            <a href="https://dataraiz.io" target="_blank" rel="noopener">dataraiz.io ↗</a>
+          </p>
+        </div>
+        <div class="col">
+          <p class="motto">Learning, creation, experimentation.</p>
+          <p class="spanish">A space for training, creation and experimentation in art, science and technology.</p>
+          <p class="body dataraiz-body">
+            Dataraiz is the media lab I run in Buenos Aires. Hybrid
+            courses and workshops for beginners and advanced practitioners,
+            mentorship for projects and research while they're still open,
+            and seminars, exhibitions and collective experiments held in a
+            relaxed, unfinished format. It's open to the whole curious
+            community — students and professionals working across art,
+            science and technology.
+          </p>
+          <p class="caption strands">Courses · Mentorship · Events</p>
+          <div class="ciclo-negro" id="ciclo-negro" role="region" aria-labelledby="ciclo-negro-title">
+            <p class="gloss">Festival · Buenos Aires</p>
+            <h2 class="plate__title" id="ciclo-negro-title">Ciclo Negro</h2>
+            <p class="body">
+              I created Ciclo Negro, a 12-hour festival where technology
+              becomes a sensitive language. Masterclasses, interactive art
+              installations, critical conversations and live audiovisual
+              performances share the same immersive environment.
+            </p>
+            <figure class="plate__media entry-media entry-media--ciclo" data-reveal>
+              <video data-viewport-video autoplay muted loop playsinline preload="metadata" src="./Av1.mp4" aria-label="Ciclo Negro festival"></video>
+            </figure>
+            <p class="caption ciclo-negro__link"><a href="https://ciclonegro.dataraiz.io/" target="_blank" rel="noopener">ciclonegro.dataraiz.io ↗</a></p>
+          </div>
+        </div>
+      </section>
+
+      <section class="section archive-section" aria-label="Video archive">
+        <div class="archive-video-grid" data-reveal>
+          <button class="archive-video-card" type="button" data-video-src="./assets/videos/comp/BOSQUE.webm" data-video-poster="./assets/videos/posters/BOSQUE.jpg" aria-label="Open archive video">
+            <video data-hover-video data-viewport-video autoplay muted loop playsinline preload="metadata" src="./assets/videos/comp/BOSQUE.webm" poster="./assets/videos/posters/BOSQUE.jpg"></video>
+          </button>
+          <button class="archive-video-card" type="button" data-video-src="./assets/videos/comp/particles.webm" data-video-poster="./assets/videos/posters/particles.jpg" aria-label="Open archive video">
+            <video data-hover-video data-viewport-video autoplay muted loop playsinline preload="metadata" src="./assets/videos/comp/particles.webm" poster="./assets/videos/posters/particles.jpg"></video>
+          </button>
+          <button class="archive-video-card" type="button" data-video-src="./assets/videos/comp/AI.webm" data-video-poster="./assets/videos/posters/AI.jpg" aria-label="Open archive video">
+            <video data-hover-video data-viewport-video autoplay muted loop playsinline preload="metadata" src="./assets/videos/comp/AI.webm" poster="./assets/videos/posters/AI.jpg"></video>
+          </button>
+          <button class="archive-video-card" type="button" data-video-src="./assets/videos/comp/coloso.webm" data-video-poster="./assets/videos/posters/coloso.jpg" aria-label="Open archive video">
+            <video data-hover-video data-viewport-video autoplay muted loop playsinline preload="metadata" src="./assets/videos/comp/coloso.webm" poster="./assets/videos/posters/coloso.jpg"></video>
+          </button>
+          <button class="archive-video-card" type="button" data-video-src="./assets/videos/comp/coloso2.webm" data-video-poster="./assets/videos/posters/coloso2.jpg" aria-label="Open archive video">
+            <video data-hover-video data-viewport-video autoplay muted loop playsinline preload="metadata" src="./assets/videos/comp/coloso2.webm" poster="./assets/videos/posters/coloso2.jpg"></video>
+          </button>
+          <button class="archive-video-card" type="button" data-video-src="./assets/videos/comp/effect.webm" data-video-poster="./assets/videos/posters/effect.jpg" aria-label="Open archive video">
+            <video data-hover-video data-viewport-video autoplay muted loop playsinline preload="metadata" src="./assets/videos/comp/effect.webm" poster="./assets/videos/posters/effect.jpg"></video>
+          </button>
+          <button class="archive-video-card" type="button" data-video-src="./assets/videos/comp/laser.webm" data-video-poster="./assets/videos/posters/laser.jpg" aria-label="Open archive video">
+            <video data-hover-video data-viewport-video autoplay muted loop playsinline preload="metadata" src="./assets/videos/comp/laser.webm" poster="./assets/videos/posters/laser.jpg"></video>
+          </button>
+          <button class="archive-video-card" type="button" data-video-src="./assets/videos/comp/water.webm" data-video-poster="./assets/videos/posters/water.jpg" aria-label="Open archive video">
+            <video data-hover-video data-viewport-video autoplay muted loop playsinline preload="metadata" src="./assets/videos/comp/water.webm" poster="./assets/videos/posters/water.jpg"></video>
+          </button>
+        </div>
+      </section>
+
+      <div class="video-lightbox" hidden aria-modal="true" role="dialog" aria-label="Video">
+        <div class="video-lightbox__panel">
+          <div class="video-lightbox__frame">
+            <video class="video-lightbox__video" playsinline loop controls controlslist="nofullscreen nodownload noremoteplayback" disablepictureinpicture></video>
+          </div>
+          <div class="video-lightbox__bar">
+            <div class="video-lightbox__actions">
+              <button class="video-lightbox__button" type="button" data-video-audio>Audio off</button>
+              <button class="video-lightbox__button" type="button" data-video-close>Close</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <footer class="row colophon">
+        <div class="rail" aria-hidden="true"></div>
+        <div class="col">
+          <div class="colophon-list">
+            <p>Buenos Aires</p>
+            <p><a href="mailto:contact@manuelpalenque.info">contact@manuelpalenque.info</a></p>
+            <p><a href="./Manuel Palenque portfolio.pdf" target="_blank" rel="noopener">Portfolio PDF ↗</a></p>
+          </div>
+        </div>
+      </footer>
+    </main>
+
+    <script>
+      (function () {
+        const headerEl = document.querySelector(".header");
+        const wordmarkEl = document.querySelector(".wordmark");
+        const lastLineEl = document.querySelector(".wordmark-line--last");
+        const lastLetterEl = document.querySelector(".wordmark-last");
+        const textMeasureCanvas = document.createElement("canvas");
+        const textMeasureContext = textMeasureCanvas.getContext("2d");
+
+        let wordmarkAlignTicking = false;
+        function alignWordmarkToQuadrant() {
+          wordmarkAlignTicking = false;
+          if (!wordmarkEl || !lastLineEl) return;
+          wordmarkEl.style.removeProperty("--wordmark-fit");
+          if (window.innerWidth <= 640) return;
+
+          for (let i = 0; i < 4; i++) {
+            const headerRect = headerEl.getBoundingClientRect();
+            const studioRect = lastLineEl.getBoundingClientRect();
+            const oRect = lastLetterEl ? lastLetterEl.getBoundingClientRect() : studioRect;
+            const targetRight = headerRect.left + headerRect.width / 3;
+            if (studioRect.width <= 0) return;
+
+            const styles = getComputedStyle(wordmarkEl);
+            const currentSize = parseFloat(styles.fontSize);
+            let oRightSideBearing = 0;
+            if (textMeasureContext && lastLetterEl) {
+              textMeasureContext.font = `${styles.fontWeight} ${styles.fontSize} ${styles.fontFamily}`;
+              const metrics = textMeasureContext.measureText(lastLetterEl.textContent || "O");
+              oRightSideBearing = Math.max(0, metrics.width - (metrics.actualBoundingBoxRight || metrics.width));
+            }
+
+            const visualORight = oRect.right - oRightSideBearing;
+            const error = targetRight - visualORight;
+            if (Math.abs(error) < 0.15) return;
+
+            const maxByHeight = headerRect.height * 0.34;
+            const nextSize = Math.max(48, Math.min(340, maxByHeight, currentSize + error * (currentSize / studioRect.width)));
+            wordmarkEl.style.setProperty("--wordmark-fit", nextSize.toFixed(2) + "px");
+          }
+        }
+
+        function requestWordmarkAlign() {
+          if (wordmarkAlignTicking) return;
+          wordmarkAlignTicking = true;
+          requestAnimationFrame(alignWordmarkToQuadrant);
+        }
+
+        requestWordmarkAlign();
+        if (document.fonts && document.fonts.ready) {
+          document.fonts.ready.then(requestWordmarkAlign);
+        }
+        window.addEventListener("resize", requestWordmarkAlign);
+      })();
+    </script>
+    <script>
+      (function () {
+        const cards = Array.from(document.querySelectorAll(".archive-video-card"));
+        const featuredVideoTriggers = Array.from(document.querySelectorAll(".entry-media--interactive[data-video-src]"));
+        const alwaysVideos = Array.from(document.querySelectorAll("[data-always-video]"));
+        const hoverVideos = cards.map((card) => card.querySelector("[data-hover-video]")).filter(Boolean);
+        const viewportVideos = Array.from(document.querySelectorAll("[data-viewport-video]"));
+        const lightbox = document.querySelector(".video-lightbox");
+        const lightboxVideo = lightbox ? lightbox.querySelector(".video-lightbox__video") : null;
+        const lightboxTitle = lightbox ? lightbox.querySelector(".video-lightbox__title") : null;
+        const closeButton = lightbox ? lightbox.querySelector("[data-video-close]") : null;
+        const audioButton = lightbox ? lightbox.querySelector("[data-video-audio]") : null;
+        const canHover = window.matchMedia && window.matchMedia("(hover: hover) and (pointer: fine)").matches;
+        const mobilePreviewQuery = window.matchMedia ? window.matchMedia("(max-width: 640px), (hover: none) and (pointer: coarse)") : null;
+        let lastFocusedElement = null;
+        let activeMobileCard = null;
+        let mobilePreviewFrame = 0;
+
+        function escapeCssUrl(url) {
+          return String(url).replace(/(["\\])/g, "\\$1");
+        }
+
+        function getVideoSurface(video) {
+          return video ? video.closest(".archive-video-card, .entry-media, .video-lightbox__frame") : null;
+        }
+
+        function syncVideoPoster(video) {
+          const surface = getVideoSurface(video);
+          if (!surface || !video || !video.poster) return;
+          surface.style.backgroundImage = `url("${escapeCssUrl(video.poster)}")`;
+        }
+
+        function setVideoFrameReady(video, isReady) {
+          if (!video) return;
+          video.dataset.frameReady = isReady ? "true" : "false";
+        }
+
+        function requestVideoPlayback(video) {
+          if (!video) return;
+          video.dataset.playRequested = "true";
+          if (video.readyState < 2) {
+            setVideoFrameReady(video, false);
+            video.load();
+            return;
+          }
+          setVideoFrameReady(video, true);
+          const playPromise = video.play();
+          if (playPromise) playPromise.catch(function () {});
+        }
+
+        function setupVideoSurface(video) {
+          if (!video || video.dataset.surfaceReady === "true") return;
+          video.dataset.surfaceReady = "true";
+          syncVideoPoster(video);
+          setVideoFrameReady(video, video.readyState >= 2);
+          video.addEventListener("loadeddata", function () {
+            syncVideoPoster(video);
+            setVideoFrameReady(video, true);
+            if (video.dataset.playRequested === "true" && !document.hidden) {
+              const playPromise = video.play();
+              if (playPromise) playPromise.catch(function () {});
+            }
+          });
+          video.addEventListener("emptied", function () {
+            setVideoFrameReady(video, false);
+          });
+          video.addEventListener("loadstart", function () {
+            syncVideoPoster(video);
+            if (video.readyState < 2) setVideoFrameReady(video, false);
+          });
+        }
+
+        function ensureVideoSource(video, source) {
+          if (!video || !source || video.dataset.loaded === "true") return;
+          setupVideoSurface(video);
+          video.src = source;
+          video.dataset.loaded = "true";
+          video.load();
+        }
+
+        function playPreview(card) {
+          const video = card.querySelector("[data-hover-video]");
+          if (!video) return;
+          ensureVideoSource(video, card.dataset.videoSrc);
+          video.muted = true;
+          requestVideoPlayback(video);
+        }
+
+        function pausePreview(card) {
+          const video = card.querySelector("[data-hover-video]");
+          if (!video) return;
+          video.dataset.playRequested = "false";
+          video.pause();
+        }
+
+        function playAlwaysVideo(video) {
+          if (!video) return;
+          setupVideoSurface(video);
+          video.defaultMuted = true;
+          video.muted = true;
+          video.loop = true;
+          requestVideoPlayback(video);
+        }
+
+        function playViewportVideo(video) {
+          if (!video) return;
+          setupVideoSurface(video);
+          video.muted = true;
+          requestVideoPlayback(video);
+        }
+
+        function pauseViewportVideo(video) {
+          if (!video) return;
+          video.dataset.playRequested = "false";
+          video.pause();
+        }
+
+        function isViewportVideoVisible(video) {
+          const rect = video.getBoundingClientRect();
+          const viewportHeight = window.innerHeight || document.documentElement.clientHeight;
+          return rect.bottom > viewportHeight * 0.12 && rect.top < viewportHeight * 0.88;
+        }
+
+        function isMobilePreviewMode() {
+          return mobilePreviewQuery ? mobilePreviewQuery.matches : !canHover;
+        }
+
+        function getCenteredArchiveCard() {
+          const viewportHeight = window.innerHeight || document.documentElement.clientHeight;
+          const viewportCenter = viewportHeight / 2;
+          let centeredCard = null;
+          let closestDistance = Infinity;
+
+          cards.forEach((card) => {
+            const rect = card.getBoundingClientRect();
+            if (rect.bottom <= 0 || rect.top >= viewportHeight) return;
+            const cardCenter = rect.top + rect.height / 2;
+            const distance = Math.abs(cardCenter - viewportCenter);
+            if (distance < closestDistance) {
+              closestDistance = distance;
+              centeredCard = card;
+            }
+          });
+
+          return centeredCard;
+        }
+
+        function setActiveMobilePreview(card) {
+          activeMobileCard = card;
+          cards.forEach((candidate) => {
+            if (candidate === activeMobileCard) {
+              candidate.classList.add("is-previewing");
+              const video = candidate.querySelector("[data-hover-video]");
+              if (!video || video.paused || video.dataset.loaded !== "true") playPreview(candidate);
+              return;
+            }
+            candidate.classList.remove("is-previewing");
+            pausePreview(candidate);
+          });
+        }
+
+        function updateMobilePreview() {
+          mobilePreviewFrame = 0;
+          if (!isMobilePreviewMode() || document.hidden || (lightbox && !lightbox.hidden)) {
+            setActiveMobilePreview(null);
+            return;
+          }
+          setActiveMobilePreview(getCenteredArchiveCard());
+        }
+
+        function requestMobilePreviewUpdate() {
+          if (!isMobilePreviewMode()) {
+            if (activeMobileCard) setActiveMobilePreview(null);
+            return;
+          }
+          if (mobilePreviewFrame) return;
+          mobilePreviewFrame = window.requestAnimationFrame(updateMobilePreview);
+        }
+
+        function setAudioButtonState() {
+          if (!audioButton || !lightboxVideo) return;
+          audioButton.textContent = lightboxVideo.muted ? "Audio off" : "Audio on";
+        }
+
+        function getRequestedVolume(trigger) {
+          const volume = Number.parseFloat(trigger.dataset.videoVolume);
+          if (!Number.isFinite(volume)) return 1;
+          return Math.max(0, Math.min(1, volume));
+        }
+
+        function openLightbox(trigger) {
+          if (!lightbox || !lightboxVideo) return;
+          setActiveMobilePreview(null);
+          lastFocusedElement = document.activeElement;
+          pausePreview(trigger);
+          viewportVideos.forEach(pauseViewportVideo);
+          lightboxVideo.pause();
+          lightboxVideo.src = trigger.dataset.videoSrc;
+          lightboxVideo.poster = trigger.dataset.videoPoster || "";
+          setupVideoSurface(lightboxVideo);
+          syncVideoPoster(lightboxVideo);
+          setVideoFrameReady(lightboxVideo, false);
+          lightboxVideo.muted = trigger.dataset.videoAudio !== "on";
+          lightboxVideo.volume = getRequestedVolume(trigger);
+          lightboxVideo.currentTime = 0;
+          if (lightboxTitle) lightboxTitle.textContent = trigger.dataset.videoTitle || "Archive film";
+          setAudioButtonState();
+          lightbox.hidden = false;
+          lightbox.classList.remove("is-fullscreen");
+          lightbox.setAttribute("aria-label", trigger.dataset.videoTitle || "Archive video");
+          document.body.classList.add("is-video-modal-open");
+          requestVideoPlayback(lightboxVideo);
+          if (closeButton) closeButton.focus({ preventScroll: true });
+        }
+
+        function closeLightbox() {
+          if (!lightbox || !lightboxVideo || lightbox.hidden) return;
+          lightboxVideo.dataset.playRequested = "false";
+          lightboxVideo.pause();
+          lightboxVideo.removeAttribute("src");
+          setVideoFrameReady(lightboxVideo, false);
+          lightboxVideo.load();
+          lightbox.hidden = true;
+          lightbox.classList.remove("is-fullscreen");
+          lightbox.setAttribute("aria-label", "Archive video");
+          document.body.classList.remove("is-video-modal-open");
+          if (lastFocusedElement && typeof lastFocusedElement.focus === "function") {
+            lastFocusedElement.focus({ preventScroll: true });
+          }
+          requestMobilePreviewUpdate();
+        }
+
+        cards.forEach((card) => {
+          if (canHover) {
+            card.addEventListener("pointerenter", () => playPreview(card));
+            card.addEventListener("pointerleave", () => pausePreview(card));
+            card.addEventListener("focus", () => playPreview(card));
+            card.addEventListener("blur", () => pausePreview(card));
+          }
+          card.addEventListener("click", () => openLightbox(card));
+        });
+
+        featuredVideoTriggers.forEach((trigger) => {
+          trigger.addEventListener("click", () => openLightbox(trigger));
+          trigger.addEventListener("keydown", (event) => {
+            if (event.key !== "Enter" && event.key !== " ") return;
+            event.preventDefault();
+            openLightbox(trigger);
+          });
+        });
+
+        alwaysVideos.forEach((video) => {
+          setupVideoSurface(video);
+          playAlwaysVideo(video);
+          video.addEventListener("pause", () => {
+            if (!document.hidden) window.requestAnimationFrame(() => playAlwaysVideo(video));
+          });
+        });
+
+        hoverVideos.forEach(setupVideoSurface);
+        viewportVideos.forEach(setupVideoSurface);
+        if (lightboxVideo) setupVideoSurface(lightboxVideo);
+
+        if ("IntersectionObserver" in window) {
+          const observer = new IntersectionObserver((entries) => {
+            entries.forEach((entry) => {
+              if (!entry.isIntersecting) entry.target.pause();
+            });
+          }, { rootMargin: "160px 0px" });
+          hoverVideos.forEach((video) => observer.observe(video));
+        }
+
+        if ("IntersectionObserver" in window) {
+          const viewportObserver = new IntersectionObserver((entries) => {
+            entries.forEach((entry) => {
+              if (entry.isIntersecting && entry.intersectionRatio >= 0.32) {
+                playViewportVideo(entry.target);
+              } else {
+                pauseViewportVideo(entry.target);
+              }
+            });
+          }, { threshold: [0, 0.32, 0.6] });
+          viewportVideos.forEach((video) => viewportObserver.observe(video));
+        }
+
+        if (isMobilePreviewMode()) requestMobilePreviewUpdate();
+        window.addEventListener("scroll", requestMobilePreviewUpdate, { passive: true });
+        window.addEventListener("resize", requestMobilePreviewUpdate);
+        window.addEventListener("orientationchange", requestMobilePreviewUpdate);
+        document.addEventListener("visibilitychange", requestMobilePreviewUpdate);
+        document.addEventListener("visibilitychange", () => {
+          if (document.hidden) {
+            viewportVideos.forEach(pauseViewportVideo);
+          } else {
+            alwaysVideos.forEach(playAlwaysVideo);
+            viewportVideos.forEach((video) => {
+              if (isViewportVideoVisible(video)) playViewportVideo(video);
+            });
+          }
+        });
+        if (mobilePreviewQuery) {
+          const handlePreviewModeChange = () => {
+            setActiveMobilePreview(null);
+            requestMobilePreviewUpdate();
+          };
+          if (mobilePreviewQuery.addEventListener) {
+            mobilePreviewQuery.addEventListener("change", handlePreviewModeChange);
+          } else if (mobilePreviewQuery.addListener) {
+            mobilePreviewQuery.addListener(handlePreviewModeChange);
+          }
+        }
+
+        if (closeButton) closeButton.addEventListener("click", closeLightbox);
+        if (audioButton) {
+          audioButton.addEventListener("click", () => {
+            if (!lightboxVideo) return;
+            lightboxVideo.muted = !lightboxVideo.muted;
+            setAudioButtonState();
+          });
+        }
+        if (lightbox) {
+          lightbox.addEventListener("click", (event) => {
+            if (event.target === lightbox) closeLightbox();
+          });
+        }
+        document.addEventListener("keydown", (event) => {
+          if (event.key === "Escape") closeLightbox();
+        });
+      })();
+    </script>
+    <script>
+      (function () {
+        const targets = Array.from(document.querySelectorAll("[data-reveal]"));
+        if (!targets.length) return;
+        const reduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+        if (reduce || !("IntersectionObserver" in window)) {
+          targets.forEach((el) => el.classList.add("is-in"));
+          return;
+        }
+        const observer = new IntersectionObserver((entries) => {
+          entries.forEach((entry) => {
+            if (!entry.isIntersecting) return;
+            entry.target.classList.add("is-in");
+            observer.unobserve(entry.target);
+          });
+        }, { threshold: 0.1, rootMargin: "0px 0px -10% 0px" });
+        targets.forEach((el) => observer.observe(el));
+      })();
+    </script>
+    <script>
+      (function () {
+        const menuLinks = Array.from(document.querySelectorAll('a.index-row[href^="#"]'));
+        if (!menuLinks.length || !window.matchMedia) return;
+
+        const touchQuery = window.matchMedia("(hover: none), (pointer: coarse)");
+        const reduceQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
+        let navigationTimer = 0;
+
+        const clearHotState = (except) => {
+          menuLinks.forEach((link) => {
+            if (link !== except) link.classList.remove("is-hot");
+          });
+        };
+
+        menuLinks.forEach((link) => {
+          link.addEventListener("pointerdown", (event) => {
+            if (!touchQuery.matches && event.pointerType === "mouse") return;
+            clearHotState(link);
+            link.classList.add("is-hot");
+          });
+
+          link.addEventListener("pointercancel", () => {
+            link.classList.remove("is-hot");
+          });
+
+          link.addEventListener("click", (event) => {
+            if (!touchQuery.matches || reduceQuery.matches) return;
+            if (event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+
+            const target = document.querySelector(link.getAttribute("href"));
+            if (!target) return;
+
+            event.preventDefault();
+            window.clearTimeout(navigationTimer);
+            clearHotState(link);
+            link.classList.add("is-hot");
+
+            navigationTimer = window.setTimeout(() => {
+              history.pushState(null, "", link.getAttribute("href"));
+              target.scrollIntoView({ behavior: "smooth", block: "start" });
+              window.setTimeout(() => link.classList.remove("is-hot"), 700);
+            }, 460);
+          });
+        });
+      })();
+    </script>
+  </body>
+</html>
