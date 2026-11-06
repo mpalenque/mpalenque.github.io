@@ -3,10 +3,10 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, viewport-fit=cover" />
-    <title>Manuel Palenque — Artist</title>
+    <title>Manuel Palenque — Senior Creative Technologist, Live A/V Artist &amp; Director of DataRaíz</title>
     <meta
       name="description"
-      content="Manuel Palenque is an artist in Buenos Aires. Sound and visual performance made in real time — Colapso, Verano Tecnópolis, Adidas NMD, Bright Moments — and Dataraiz, a media lab for art, science and technology."
+      content="Manuel Palenque — Senior Creative Technologist, Live A/V Artist & Director of DataRaíz. 15+ years designing real-time audiovisual systems, interactive installations, and immersive stage technologies (Fuerza Bruta, Superside, Buenos Aires Planetarium). Upcoming US Dates: NYC (Nov 20–23, 2026)."
     />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -61,11 +61,119 @@
       }
       #perf, #stats, .stats, .fps-meter, [data-fps-meter] { display: none !important; }
 
+      /* ---------- top banner & nav ---------- */
+      .us-banner {
+        position: relative;
+        z-index: 30;
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: space-between;
+        gap: 0.5rem 1.25rem;
+        padding: 0.65rem var(--gutter);
+        background: rgba(242, 244, 248, 0.045);
+        border-bottom: 1px solid var(--rule-hi);
+        font-family: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+        font-size: 11px;
+        letter-spacing: 0.06em;
+        line-height: 1.5;
+        color: var(--ink);
+      }
+      .us-banner__text {
+        margin: 0;
+      }
+      .us-banner__cta {
+        font-size: 10.5px;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        color: var(--ink);
+        white-space: nowrap;
+        text-decoration: underline;
+        text-underline-offset: 0.28em;
+      }
+      .site-nav {
+        position: sticky;
+        top: 0;
+        z-index: 25;
+        display: grid;
+        grid-template-columns: 33.3333% minmax(0, 1fr);
+        align-items: center;
+        padding: 0.85rem 0;
+        background: rgba(0, 0, 0, 0.86);
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
+        border-bottom: 1px solid var(--rule);
+      }
+      .site-nav__brand {
+        padding-left: var(--gutter);
+        padding-right: var(--seam-pad);
+        font-family: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+        font-size: 11px;
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
+        color: var(--ink-88);
+        text-decoration: none;
+      }
+      .site-nav__links {
+        padding-left: var(--seam-pad);
+        padding-right: var(--gutter);
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 0.55rem 0.75rem;
+      }
+      .nav-btn {
+        display: inline-flex;
+        align-items: center;
+        padding: 0.45rem 0.75rem;
+        border: 1px solid var(--rule-hi);
+        background: rgba(242, 244, 248, 0.04);
+        font-family: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+        font-size: 10.5px;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        color: var(--ink);
+        text-decoration: none;
+        transition: background 180ms ease, color 180ms ease, border-color 180ms ease;
+      }
+      .nav-btn--primary {
+        background: var(--ink);
+        color: #000;
+        border-color: var(--ink);
+        font-weight: 400;
+      }
+      .nav-btn:hover,
+      .nav-btn:focus-visible {
+        background: var(--ink);
+        color: #000;
+        border-color: var(--ink);
+        text-decoration: none;
+      }
+      .nav-btn--primary:hover,
+      .nav-btn--primary:focus-visible {
+        background: rgba(242, 244, 248, 0.85);
+        color: #000;
+      }
+      .nav-link-subtle {
+        font-family: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+        font-size: 10.5px;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        color: var(--ink-62);
+        text-decoration: none;
+        padding: 0.35rem 0.35rem;
+        transition: color 150ms ease;
+      }
+      .nav-link-subtle:hover,
+      .nav-link-subtle:focus-visible {
+        color: var(--ink);
+      }
+
       /* ---------- header ---------- */
       .header {
         position: relative;
         width: 100%;
-        height: clamp(300px, 40svh, 700px);
+        height: clamp(340px, 44svh, 700px);
         background: #000;
         overflow: hidden;
       }
@@ -118,12 +226,29 @@
       .hero__line {
         margin: 0;
         padding: 0 var(--gutter) 0.18em var(--seam-pad);
-        max-width: 34em;
-        font-size: clamp(1rem, 1.25vw, 1.18rem);
+        max-width: 42em;
+        font-size: clamp(0.98rem, 1.18vw, 1.14rem);
         font-weight: 300;
         letter-spacing: -0.004em;
         line-height: 1.55;
         color: var(--ink-72);
+      }
+      .hero__role {
+        display: block;
+        color: var(--ink);
+        font-weight: 400;
+        margin-bottom: 0.35rem;
+      }
+      .hero__dates {
+        display: inline-block;
+        margin-top: 0.65rem;
+        padding: 0.32rem 0.6rem;
+        border: 1px solid var(--rule-hi);
+        background: rgba(242, 244, 248, 0.05);
+        font-family: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+        font-size: 10.5px;
+        letter-spacing: 0.08em;
+        color: var(--ink);
       }
 
       /* ---------- the axis ---------- */
@@ -585,6 +710,12 @@
       }
       @media (max-width: 900px) {
         .seams { display: none; }
+        .site-nav {
+          grid-template-columns: minmax(0, 1fr);
+          gap: 0.55rem;
+        }
+        .site-nav__brand { display: none; }
+        .site-nav__links { padding-left: var(--gutter); }
         .hero {
           grid-template-columns: minmax(0, 1fr);
           gap: var(--s2);
@@ -629,8 +760,9 @@
       }
       @media (max-width: 640px) {
         :root { --gutter: 1.25rem; }
-        .header { height: clamp(300px, 48svh, 430px); }
+        .header { height: clamp(380px, 56svh, 520px); }
         .wordmark { --wordmark-size: clamp(2.45rem, 14vw, 4.2rem); }
+        .us-banner { font-size: 10px; padding-block: 0.55rem; }
       }
       @media (prefers-reduced-motion: reduce) {
         [data-reveal], [data-reveal].is-in {
@@ -644,6 +776,24 @@
     </style>
   </head>
   <body>
+    <div class="us-banner" role="region" aria-label="Upcoming US Dates">
+      <p class="us-banner__text">
+        📍 Upcoming US Dates: New York City (Nov 20–23, 2026) — Available for 2027 Bookings, Visiting Lectures &amp; Commissions (US Visa Active)
+      </p>
+      <a class="us-banner__cta" href="./epk/">View Touring Packages &amp; EPK →</a>
+    </div>
+
+    <nav class="site-nav" aria-label="Primary Navigation">
+      <a class="site-nav__brand" href="./">Manuel Palenque</a>
+      <div class="site-nav__links">
+        <a class="nav-btn nav-btn--primary" href="./epk/">[LIVE A/V &amp; EPK]</a>
+        <a class="nav-btn" href="./syncro-av/#institutions">[SPEAKING &amp; WORKSHOPS]</a>
+        <a class="nav-link-subtle" href="#index-title">Work</a>
+        <a class="nav-link-subtle" href="#dataraiz-title">DataRaíz</a>
+        <a class="nav-link-subtle" href="mailto:contact@manuelpalenque.info?subject=NYC%20Nov%2020-23%20%2F%2F%202027%20Booking%20Inquiry">Contact</a>
+      </div>
+    </nav>
+
     <header class="header" aria-label="Manuel Palenque">
       <div class="hero">
         <div class="hero__name">
@@ -651,6 +801,11 @@
             <span class="wordmark-line" aria-hidden="true">MANUEL</span>
             <span class="wordmark-line wordmark-line--last" aria-hidden="true">PALENQU<span class="wordmark-last">E</span></span>
           </h1>
+        </div>
+        <div class="hero__line">
+          <span class="hero__role">Manuel Palenque — Senior Creative Technologist, Live A/V Artist &amp; Director of DataRaíz.</span>
+          15+ years designing real-time audiovisual systems, interactive installations, and immersive stage technologies (Fuerza Bruta, Superside, Buenos Aires Planetarium).<br />
+          <span class="hero__dates">📍 Upcoming US Dates: New York City (Nov 20–23, 2026) — Available for Bookings, Lectures &amp; Commissions 2027</span>
         </div>
       </div>
     </header>
@@ -956,9 +1111,11 @@
         <div class="rail" aria-hidden="true"></div>
         <div class="col">
           <div class="colophon-list">
-            <p>Buenos Aires</p>
+            <p>Buenos Aires · New York · Chicago · Miami (US Visa Active)</p>
             <p><a href="mailto:contact@manuelpalenque.info">contact@manuelpalenque.info</a></p>
-            <p><a href="./curso/">Syncro A/V — Workshop ↗</a></p>
+            <p><a href="./epk/">Live A/V &amp; 2027 US Touring EPK ↗</a></p>
+            <p><a href="./syncro-av/">Syncro A/V — Visiting Artist Lecture &amp; Masterclass ↗</a></p>
+            <p><a href="./curso/">Syncro A/V — Workshop (ES/EN) ↗</a></p>
             <p><a href="./Manuel Palenque portfolio.pdf" target="_blank" rel="noopener">Portfolio PDF ↗</a></p>
           </div>
         </div>

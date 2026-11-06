@@ -1,0 +1,1080 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <title>Manuel Palenque — Live A/V, Visiting Artist &amp; Speaking EPK (2026/2027 US Touring)</title>
+    <meta
+      name="description"
+      content="Official US Touring EPK & Technical Rider for Manuel Palenque — Senior Creative Technologist at Superside, former Technical Video Director for Fuerza Bruta, Founder of DataRaíz. In NYC Nov 20–23, 2026."
+    />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Manuel Palenque — Live A/V &amp; US Touring EPK (2026/2027)" />
+    <meta property="og:description" content="Real-Time Audiovisual Systems, Syncro A/V Visiting Artist Module &amp; Interactive Installations. In NYC Nov 20–23, 2026 (US Visa Active)." />
+    <meta property="og:url" content="https://mpalenque.github.io/epk/" />
+    <meta property="og:image" content="https://mpalenque.github.io/assets/portfolio/colapso.webp" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500&family=JetBrains+Mono:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="preload" href="../assets/curso/colapso-poster.jpg" as="image" />
+    <style>
+      :root {
+        color-scheme: dark;
+        --bg: #000;
+        --panel: rgba(242, 244, 248, 0.025);
+        --panel-hi: rgba(242, 244, 248, 0.055);
+        --ink: #f2f4f8;
+        --ink-88: rgba(242, 244, 248, 0.88);
+        --ink-72: rgba(242, 244, 248, 0.72);
+        --ink-62: rgba(242, 244, 248, 0.62);
+        --ink-52: rgba(242, 244, 248, 0.52);
+        --rule: rgba(242, 244, 248, 0.1);
+        --rule-hi: rgba(242, 244, 248, 0.28);
+        --seam: rgba(242, 244, 248, 0.085);
+        --gutter: clamp(1.25rem, 2.4vw, 2.75rem);
+        --seam-pad: clamp(1.1rem, 1.8vw, 2rem);
+        --s1: 0.5rem;
+        --s2: 1rem;
+        --s3: 1.75rem;
+        --s4: 3rem;
+        --s5: 4.5rem;
+        --s6: clamp(4.5rem, 7.5vw, 7rem);
+        --ease: cubic-bezier(0.22, 1, 0.36, 1);
+      }
+      * { box-sizing: border-box; }
+      html, body {
+        margin: 0;
+        min-height: 100%;
+        width: 100%;
+        max-width: 100%;
+        overflow-x: hidden;
+        scroll-behavior: smooth;
+      }
+      @supports (overflow: clip) {
+        html, body { overflow-x: clip; }
+      }
+      body {
+        background: var(--bg);
+        color: var(--ink);
+        font-family: "Inter", system-ui, -apple-system, sans-serif;
+        font-weight: 300;
+        line-height: 1.6;
+        -webkit-font-smoothing: antialiased;
+      }
+      a {
+        color: inherit;
+        text-decoration: underline;
+        text-underline-offset: 0.28em;
+        text-decoration-thickness: 1px;
+        text-decoration-color: rgba(242, 244, 248, 0.28);
+        transition: text-decoration-color 150ms ease, color 150ms ease, background 150ms ease, border-color 150ms ease;
+      }
+      a:hover, a:focus-visible { text-decoration-color: var(--ink); }
+
+      /* ---------- Top US Banner & Sticky Nav ---------- */
+      .us-banner {
+        position: relative;
+        z-index: 30;
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: space-between;
+        gap: 0.5rem 1.25rem;
+        padding: 0.65rem var(--gutter);
+        background: rgba(242, 244, 248, 0.055);
+        border-bottom: 1px solid var(--rule-hi);
+        font-family: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+        font-size: 11px;
+        letter-spacing: 0.06em;
+        color: var(--ink);
+      }
+      .us-banner p { margin: 0; }
+      .us-banner__cta {
+        font-size: 10.5px;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        white-space: nowrap;
+      }
+      .site-nav {
+        position: sticky;
+        top: 0;
+        z-index: 25;
+        display: grid;
+        grid-template-columns: 33.3333% minmax(0, 1fr);
+        align-items: center;
+        padding: 0.85rem 0;
+        background: rgba(0, 0, 0, 0.88);
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
+        border-bottom: 1px solid var(--rule);
+      }
+      .site-nav__brand {
+        padding-left: var(--gutter);
+        padding-right: var(--seam-pad);
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        font-family: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+        font-size: 11px;
+        letter-spacing: 0.16em;
+        text-transform: uppercase;
+        color: var(--ink);
+        text-decoration: none;
+      }
+      .site-nav__links {
+        padding-left: var(--seam-pad);
+        padding-right: var(--gutter);
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 0.45rem 0.65rem;
+      }
+      .btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.45rem;
+        padding: 0.52rem 0.9rem;
+        border: 1px solid var(--rule-hi);
+        background: rgba(242, 244, 248, 0.04);
+        font-family: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+        font-size: 10.5px;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        color: var(--ink);
+        text-decoration: none;
+        cursor: pointer;
+        transition: background 180ms ease, color 180ms ease, border-color 180ms ease;
+      }
+      .btn:hover, .btn:focus-visible {
+        background: var(--ink);
+        color: #000;
+        border-color: var(--ink);
+        text-decoration: none;
+      }
+      .btn--primary {
+        background: var(--ink);
+        color: #000;
+        border-color: var(--ink);
+        font-weight: 500;
+      }
+      .btn--primary:hover, .btn--primary:focus-visible {
+        background: rgba(242, 244, 248, 0.84);
+        color: #000;
+      }
+      .nav-anchor {
+        font-family: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+        font-size: 10.5px;
+        letter-spacing: 0.13em;
+        text-transform: uppercase;
+        color: var(--ink-62);
+        text-decoration: none;
+        padding: 0.35rem 0.4rem;
+      }
+      .nav-anchor:hover, .nav-anchor:focus-visible {
+        color: var(--ink);
+        text-decoration: none;
+      }
+
+      /* ---------- Grid & Axis ---------- */
+      main {
+        position: relative;
+        width: 100%;
+      }
+      .seams {
+        position: absolute;
+        inset: 0;
+        z-index: 0;
+        pointer-events: none;
+        background: linear-gradient(90deg, transparent calc(33.3333% - 0.5px), var(--seam) calc(33.3333% - 0.5px),
+                                    var(--seam) calc(33.3333% + 0.5px), transparent calc(33.3333% + 0.5px));
+      }
+      .row {
+        position: relative;
+        z-index: 1;
+        display: grid;
+        grid-template-columns: 33.3333% minmax(0, 1fr);
+      }
+      .section {
+        padding-block: var(--s6);
+        border-bottom: 1px solid var(--rule);
+        scroll-margin-top: 3.5rem;
+      }
+      .section--hero {
+        padding-top: clamp(2.5rem, 5vw, 4.5rem);
+        padding-bottom: var(--s5);
+      }
+      .rail {
+        padding-left: var(--gutter);
+        padding-right: var(--seam-pad);
+        text-align: right;
+      }
+      .col {
+        padding-left: var(--seam-pad);
+        padding-right: var(--gutter);
+        min-width: 0;
+      }
+      .rail-label {
+        margin: 0;
+        font-family: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+        font-size: 10.5px;
+        font-weight: 400;
+        letter-spacing: 0.22em;
+        line-height: 1.6;
+        text-transform: uppercase;
+        color: var(--ink-52);
+      }
+      .rail-data {
+        margin: var(--s2) 0 0;
+        font-family: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+        font-size: 11px;
+        font-weight: 400;
+        letter-spacing: 0.05em;
+        line-height: 1.95;
+        color: var(--ink-62);
+        font-variant-numeric: tabular-nums;
+      }
+      .eyebrow {
+        margin: 0 0 0.75rem;
+        font-family: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+        font-size: 11px;
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
+        color: var(--ink-62);
+      }
+      h1 {
+        margin: 0 0 1.1rem;
+        font-size: clamp(2.1rem, 4.2vw, 3.8rem);
+        font-weight: 200;
+        letter-spacing: -0.04em;
+        line-height: 1.02;
+        color: var(--ink);
+      }
+      h2 {
+        margin: 0 0 1.25rem;
+        font-size: clamp(1.55rem, 2.5vw, 2.35rem);
+        font-weight: 200;
+        letter-spacing: -0.03em;
+        line-height: 1.12;
+        color: var(--ink);
+      }
+      .lead {
+        margin: 0 0 1.5rem;
+        max-width: 44em;
+        font-size: clamp(1.05rem, 1.3vw, 1.22rem);
+        font-weight: 300;
+        line-height: 1.62;
+        color: var(--ink-88);
+      }
+      .body {
+        margin: 0 0 1.25rem;
+        max-width: 42em;
+        font-size: 1rem;
+        font-weight: 300;
+        line-height: 1.7;
+        color: var(--ink-72);
+      }
+
+      /* ---------- Section 1: The Show (Hero Video Reel) ---------- */
+      .reel-stage {
+        position: relative;
+        margin-top: 1.5rem;
+        border: 1px solid var(--rule-hi);
+        background: #050505;
+      }
+      .reel-frame {
+        position: relative;
+        width: 100%;
+        aspect-ratio: 16 / 9;
+        background: #000;
+        overflow: hidden;
+      }
+      .reel-frame video {
+        display: block;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+      .reel-controls {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: space-between;
+        gap: 0.75rem;
+        padding: 0.75rem 1rem;
+        background: rgba(242, 244, 248, 0.03);
+        border-top: 1px solid var(--rule);
+      }
+      .reel-tabs {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.4rem;
+      }
+      .reel-tab {
+        appearance: none;
+        border: 1px solid var(--rule);
+        background: transparent;
+        color: var(--ink-62);
+        padding: 0.42rem 0.7rem;
+        font-family: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+        font-size: 10px;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        cursor: pointer;
+        transition: all 150ms ease;
+      }
+      .reel-tab.is-active,
+      .reel-tab:hover {
+        border-color: var(--ink);
+        color: var(--ink);
+        background: rgba(242, 244, 248, 0.08);
+      }
+      .reel-actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.45rem;
+      }
+      .credentials-strip {
+        display: grid;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: 1px;
+        margin-top: 1.5rem;
+        background: var(--rule);
+        border: 1px solid var(--rule);
+      }
+      .cred-item {
+        background: #000;
+        padding: 1rem 1.1rem;
+      }
+      .cred-label {
+        display: block;
+        font-family: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+        font-size: 10px;
+        letter-spacing: 0.16em;
+        text-transform: uppercase;
+        color: var(--ink-52);
+        margin-bottom: 0.35rem;
+      }
+      .cred-val {
+        display: block;
+        font-size: 0.92rem;
+        font-weight: 300;
+        line-height: 1.45;
+        color: var(--ink-88);
+      }
+
+      /* ---------- Section 2: The 3 Touring Packages ---------- */
+      .packages-grid {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 1.25rem;
+        margin-top: 2rem;
+      }
+      .pkg-card {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        border: 1px solid var(--rule-hi);
+        background: var(--panel);
+        padding: 1.65rem 1.5rem;
+        transition: border-color 220ms ease, background 220ms ease;
+      }
+      .pkg-card:hover {
+        border-color: var(--ink);
+        background: var(--panel-hi);
+      }
+      .pkg-num {
+        font-family: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+        font-size: 10.5px;
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
+        color: var(--ink-52);
+        margin-bottom: 0.6rem;
+      }
+      .pkg-title {
+        margin: 0 0 0.45rem;
+        font-size: 1.35rem;
+        font-weight: 300;
+        letter-spacing: -0.02em;
+        line-height: 1.2;
+        color: var(--ink);
+      }
+      .pkg-tag {
+        display: inline-block;
+        margin-bottom: 1.1rem;
+        padding: 0.25rem 0.55rem;
+        border: 1px solid var(--rule);
+        font-family: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+        font-size: 10px;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        color: var(--ink-72);
+      }
+      .pkg-desc {
+        margin: 0 0 1.1rem;
+        font-size: 0.94rem;
+        line-height: 1.62;
+        color: var(--ink-72);
+      }
+      .pkg-specs {
+        margin: 0 0 1.5rem;
+        padding: 0;
+        list-style: none;
+        border-top: 1px solid var(--rule);
+      }
+      .pkg-specs li {
+        padding: 0.55rem 0;
+        border-bottom: 1px solid var(--rule);
+        font-size: 0.86rem;
+        line-height: 1.5;
+        color: var(--ink-88);
+      }
+      .pkg-specs strong {
+        font-family: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+        font-size: 10px;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        color: var(--ink-52);
+        display: block;
+        margin-bottom: 0.15rem;
+        font-weight: 400;
+      }
+      .pkg-footer {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+      }
+
+      /* ---------- Section 3: Quick Tech Rider & Logistics ---------- */
+      .visa-callout {
+        padding: 1.35rem 1.5rem;
+        border: 1px solid var(--ink);
+        background: rgba(242, 244, 248, 0.05);
+        margin-bottom: 2rem;
+      }
+      .visa-callout__title {
+        margin: 0 0 0.35rem;
+        font-family: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+        font-size: 11px;
+        letter-spacing: 0.16em;
+        text-transform: uppercase;
+        color: var(--ink);
+      }
+      .visa-callout__text {
+        margin: 0;
+        font-size: 1.08rem;
+        font-weight: 300;
+        color: var(--ink);
+      }
+      .rider-grid {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 1.25rem;
+      }
+      .rider-box {
+        border: 1px solid var(--rule-hi);
+        background: var(--panel);
+        padding: 1.5rem;
+      }
+      .rider-box h3 {
+        margin: 0 0 1rem;
+        font-family: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+        font-size: 11.5px;
+        letter-spacing: 0.16em;
+        text-transform: uppercase;
+        color: var(--ink);
+        padding-bottom: 0.75rem;
+        border-bottom: 1px solid var(--rule);
+      }
+      .rider-list {
+        margin: 0;
+        padding-left: 1.1rem;
+        color: var(--ink-72);
+        font-size: 0.93rem;
+        line-height: 1.68;
+      }
+      .rider-list li { margin-bottom: 0.65rem; }
+      .rider-list strong { color: var(--ink); font-weight: 400; }
+
+      /* ---------- Section 4: Press Photos, Bios & Direct Contact ---------- */
+      .press-photos {
+        display: grid;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: 1rem;
+        margin: 1.5rem 0 2.5rem;
+      }
+      .press-card {
+        border: 1px solid var(--rule);
+        background: var(--panel);
+        display: flex;
+        flex-direction: column;
+      }
+      .press-card img {
+        display: block;
+        width: 100%;
+        aspect-ratio: 4 / 3;
+        object-fit: cover;
+        background: #0a0a0a;
+      }
+      .press-card__meta {
+        padding: 0.75rem;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        gap: 0.5rem;
+        flex: 1;
+      }
+      .press-card__caption {
+        font-family: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+        font-size: 10px;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        color: var(--ink-62);
+      }
+      .bio-grid {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 1.25rem;
+        margin-bottom: 2.5rem;
+      }
+      .bio-card {
+        border: 1px solid var(--rule);
+        background: var(--panel);
+        padding: 1.4rem;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+      }
+      .bio-card__header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 0.75rem;
+        margin-bottom: 0.85rem;
+        padding-bottom: 0.65rem;
+        border-bottom: 1px solid var(--rule);
+      }
+      .bio-card__title {
+        font-family: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+        font-size: 11px;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        color: var(--ink);
+        margin: 0;
+      }
+      .bio-card__text {
+        font-size: 0.9rem;
+        line-height: 1.65;
+        color: var(--ink-72);
+        margin: 0 0 1rem;
+      }
+      .contact-cta-box {
+        border: 1px solid var(--rule-hi);
+        background: var(--panel-hi);
+        padding: 2rem;
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: space-between;
+        gap: 1.5rem;
+      }
+      .contact-email-big {
+        display: inline-block;
+        font-size: clamp(1.2rem, 2.4vw, 2.1rem);
+        font-weight: 300;
+        letter-spacing: -0.02em;
+        color: var(--ink);
+        margin-top: 0.35rem;
+        word-break: break-all;
+      }
+      .pkg-card, .rider-box, .bio-card, .cred-item, .press-card, .site-nav__links, .site-nav__brand, .rail {
+        min-width: 0;
+      }
+
+      /* ---------- Responsive ---------- */
+      @media (max-width: 1120px) {
+        .packages-grid { grid-template-columns: minmax(0, 1fr); }
+        .credentials-strip { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+        .press-photos { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      }
+      @media (max-width: 900px) {
+        .seams { display: none; }
+        .site-nav { grid-template-columns: minmax(0, 1fr); gap: 0.5rem; }
+        .site-nav__brand { padding-right: var(--gutter); }
+        .site-nav__links { padding-left: var(--gutter); }
+        .row { grid-template-columns: minmax(0, 1fr); }
+        .rail {
+          text-align: left;
+          padding-right: var(--gutter);
+          margin-bottom: 1.25rem;
+        }
+        .col { padding-left: var(--gutter); }
+        .rider-grid, .bio-grid { grid-template-columns: minmax(0, 1fr); }
+      }
+      @media (max-width: 640px) {
+        :root { --gutter: 1.25rem; }
+        h1 { font-size: clamp(1.75rem, 7.2vw, 2.4rem); overflow-wrap: break-word; }
+        h2 { font-size: clamp(1.4rem, 6vw, 1.9rem); }
+        .credentials-strip { grid-template-columns: minmax(0, 1fr); }
+        .press-photos { grid-template-columns: minmax(0, 1fr); }
+        .us-banner { font-size: 10px; }
+        .contact-cta-box { padding: 1.25rem; }
+      }
+      @media (prefers-reduced-motion: reduce) {
+        html { scroll-behavior: auto; }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="us-banner" role="region" aria-label="Upcoming US Dates">
+      <p>
+        📍 Upcoming US Dates: New York City (Nov 20–23, 2026) — Available for 15-min In-Person Drop-Ins, 2027 Bookings, Visiting Lectures &amp; Commissions (US Visa Active)
+      </p>
+      <a class="us-banner__cta" href="mailto:contact@manuelpalenque.info?subject=NYC%20Nov%2020-23%20Meeting%20%2F%2F%202027%20Booking%20Inquiry">Schedule NYC Coffee / Intro →</a>
+    </div>
+
+    <nav class="site-nav" aria-label="EPK Navigation">
+      <a class="site-nav__brand" href="../">← Manuel Palenque · Portfolio</a>
+      <div class="site-nav__links">
+        <a class="nav-anchor" href="#show">01 The Show</a>
+        <a class="nav-anchor" href="#packages">02 Touring Packages</a>
+        <a class="nav-anchor" href="#rider">03 Fly-In Tech Rider</a>
+        <a class="nav-anchor" href="#press">04 Press &amp; Bios</a>
+        <a class="btn" href="../syncro-av/#institutions">Syncro A/V Module ↗</a>
+        <a class="btn btn--primary" href="#contact">Book 2027 / Meet in NYC</a>
+      </div>
+    </nav>
+
+    <main>
+      <div class="seams" aria-hidden="true"></div>
+
+      <!-- SECTION 01: THE SHOW -->
+      <section class="row section section--hero" id="show" aria-labelledby="show-title">
+        <div class="rail">
+          <p class="rail-label">01 / The Show</p>
+          <p class="rail-data">
+            Live A/V &amp; Touring EPK<br />
+            North America 2026–2027<br />
+            US Visa Active<br />
+            NYC · Chicago · Miami
+          </p>
+        </div>
+        <div class="col">
+          <p class="eyebrow">Manuel Palenque · Electronic Press Kit &amp; Commercial Dossier</p>
+          <h1 id="show-title">Real-Time Audiovisual Systems, Industrial Club &amp; Laser/DMX Synchronization.</h1>
+          <p class="lead">
+            <strong>Manuel Palenque</strong> is a Senior Creative Technologist (Immersive) at <strong>Superside</strong>, former Technical Video Director for <strong>Fuerza Bruta</strong> (Tokyo / Buenos Aires), and Founder of the Buenos Aires creative tech lab &amp; festival <strong>DataRaíz / Ciclo Negro</strong>.
+          </p>
+
+          <div class="reel-stage">
+            <div class="reel-frame">
+              <video
+                id="epk-reel-video"
+                autoplay
+                muted
+                loop
+                playsinline
+                controls
+                width="1280"
+                height="720"
+                poster="../assets/curso/colapso-poster.jpg"
+                src="../assets/curso/colapso.mp4"
+              ></video>
+            </div>
+            <div class="reel-controls">
+              <div class="reel-tabs" role="tablist" aria-label="Select Performance Video">
+                <button
+                  type="button"
+                  class="reel-tab is-active"
+                  data-src="../assets/curso/colapso.mp4"
+                  data-poster="../assets/curso/colapso-poster.jpg"
+                >
+                  01. COLAPSO — Live Stage A/V + DMX
+                </button>
+                <button
+                  type="button"
+                  class="reel-tab"
+                  data-src="../assets/videos/comp/perfo.webm"
+                  data-poster="../assets/videos/posters/perfo.jpg"
+                >
+                  02. Live A/V Set Excerpt
+                </button>
+                <button
+                  type="button"
+                  class="reel-tab"
+                  data-src="../assets/videos/comp/reelold.webm"
+                  data-poster="../assets/videos/posters/reelold.jpg"
+                >
+                  03. Works &amp; Installations Reel
+                </button>
+              </div>
+              <div class="reel-actions">
+                <button type="button" class="btn" id="toggle-reel-audio">Unmute Audio</button>
+                <a class="btn" href="https://www.youtube.com/watch?v=4LSSu2OF05c" target="_blank" rel="noopener">Watch Full Reel on YouTube ↗</a>
+              </div>
+            </div>
+          </div>
+
+          <div class="credentials-strip" aria-label="Key Credentials">
+            <div class="cred-item">
+              <span class="cred-label">Current Role</span>
+              <span class="cred-val">Senior Creative Technologist (Immersive) at Superside · Founder at DataRaíz</span>
+            </div>
+            <div class="cred-item">
+              <span class="cred-label">Stage &amp; Institutional Track Record</span>
+              <span class="cred-val">Fuerza Bruta (Tokyo/BA) · Buenos Aires Planetarium · Tecnópolis · Bright Moments Venice</span>
+            </div>
+            <div class="cred-item">
+              <span class="cred-label">Performed &amp; Taught</span>
+              <span class="cred-val">MUTEK · NODE Festival Berlin · Beyond Code #2 Tokyo · School of Creative Media HK</span>
+            </div>
+            <div class="cred-item">
+              <span class="cred-label">US Touring Logistics</span>
+              <span class="cred-val">US Visa Active · Carry-On Fly-In Setup · Frequent Travel to NYC, Chicago &amp; Miami</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SECTION 02: THE 3 TOURING PACKAGES -->
+      <section class="row section" id="packages" aria-labelledby="packages-title">
+        <div class="rail">
+          <p class="rail-label">02 / Touring Packages</p>
+          <p class="rail-data">
+            2027 North American Routing<br />
+            Modular Revenue Streams<br />
+            Festivals · Universities · Venues
+          </p>
+        </div>
+        <div class="col">
+          <p class="eyebrow">Turnkey Offerings for US Bookers, Curators &amp; Department Chairs</p>
+          <h2 id="packages-title">Three Modular Formats Designed to Travel Together.</h2>
+          <p class="body">
+            Available as standalone bookings or combined regional routing (pairing an institutional Visiting Artist Masterclass with an evening Live A/V club or festival performance to offset travel and production costs).
+          </p>
+
+          <div class="packages-grid">
+            <!-- CARD 1: LIVE A/V -->
+            <article class="pkg-card">
+              <div>
+                <div class="pkg-num">Package 01 // Club, Festival &amp; Art Center Show</div>
+                <h3 class="pkg-title">Live A/V Performance</h3>
+                <span class="pkg-tag">45–60 Min Real-Time Audiovisual Set</span>
+                <p class="pkg-desc">
+                  High-impact, real-time generative visuals (vvvv particle physics, SDF raymarching, custom WebGPU/GLSL shaders), synchronized DMX/laser lighting, and industrial/experimental electronic sound. Every visual and lighting event is generated live in direct feedback with the audio.
+                </p>
+                <ul class="pkg-specs">
+                  <li>
+                    <strong>Featured Show</strong>
+                    <em>COLAPSO</em> &amp; New 2026/2027 Real-Time A/V Set (pre-visualized in a custom 3D Digital Twin of the venue stage).
+                  </li>
+                  <li>
+                    <strong>Ideal For</strong>
+                    A/V Festivals (MUTEK, CURRENTS), Experimental Sound Rooms (Public Records, Knockdown Center, Elsewhere), and Media Centers (Pioneer Works, Issue Project Room, Roulette, Gray Area).
+                  </li>
+                  <li>
+                    <strong>Touring Footprint</strong>
+                    1–2 performers · 100% carry-on fly-in rig · 45-min line check.
+                  </li>
+                </ul>
+              </div>
+              <div class="pkg-footer">
+                <a class="btn btn--primary" href="mailto:contact@manuelpalenque.info?subject=2027%20Booking%20Inquiry%20%E2%80%94%20Live%20A%2FV%20Performance">Book Live A/V Set →</a>
+                <a class="btn" href="./epk-live-av.pdf" target="_blank" rel="noopener">Download Live A/V EPK &amp; Rider (PDF) ↓</a>
+              </div>
+            </article>
+
+            <!-- CARD 2: SYNCRO A/V -->
+            <article class="pkg-card">
+              <div>
+                <div class="pkg-num">Package 02 // Universities &amp; Media Centers</div>
+                <h3 class="pkg-title">Syncro A/V Visiting Artist Module</h3>
+                <span class="pkg-tag">3-Hr Masterclass + 45-Min Live Set</span>
+                <p class="pkg-desc">
+                  A turnkey academic visiting artist module combining a rigorous lecture/workshop on the neuroscience of multisensory perception (synchresis, temporal binding window) and real-time audio/video/DMX synchronization architecture, culminating in a live performance.
+                </p>
+                <ul class="pkg-specs">
+                  <li>
+                    <strong>Format Options</strong>
+                    90-min Guest Lecture · 3-hr Hands-On Masterclass + 45-min Live A/V Show · 2-Day Intensive Lab (6 hrs) + Showcase.
+                  </li>
+                  <li>
+                    <strong>Ideal For</strong>
+                    NYU ITP/IMA, MIT ACT/Media Lab, UCLA DMA, SAIC Chicago, Parsons DT, CalArts, CultureHub, Gray Area, Harvestworks.
+                  </li>
+                  <li>
+                    <strong>Institutional Fee Guidance</strong>
+                    $1,200 – $2,500 USD (turnkey Masterclass + Live Performance combo, or institutional honorarium + travel coverage).
+                  </li>
+                </ul>
+              </div>
+              <div class="pkg-footer">
+                <a class="btn btn--primary" href="../syncro-av/#institutions">Explore Syllabus &amp; Module ↗</a>
+                <a class="btn" href="./syncro-av-visiting-artist.pdf" target="_blank" rel="noopener">Download Academic Syllabus (PDF) ↓</a>
+              </div>
+            </article>
+
+            <!-- CARD 3: SPEAKING & INSTALLATIONS -->
+            <article class="pkg-card">
+              <div>
+                <div class="pkg-num">Package 03 // Conferences, Museums &amp; Brands</div>
+                <h3 class="pkg-title">Keynote Speaking &amp; Interactive Installations</h3>
+                <span class="pkg-tag">Keynotes · Commissions · Digital Twins</span>
+                <p class="pkg-desc">
+                  Executive keynotes and custom site-specific interactive installations leveraging 15+ years leading large-scale immersive systems for Fuerza Bruta, Superside, Buenos Aires Planetarium, Adidas NMD, and Bright Moments Venice.
+                </p>
+                <ul class="pkg-specs">
+                  <li>
+                    <strong>3 Ready-to-Deliver Keynotes (EN)</strong>
+                    1. <em>Syncro A/V: Tightly Coupled Real-Time Systems</em><br />
+                    2. <em>From Stage to WebGPU: 3D Digital Twins for Live Shows</em><br />
+                    3. <em>Creative Coding &amp; AI Transitions in Interactive Art</em>
+                  </li>
+                  <li>
+                    <strong>Commissions &amp; Grants</strong>
+                    LiDAR/Kinect interactive walls, fulldome 360° systems, architectural LED facades (StandardVision, Times Square Arts), and grants (Code:ART 2027, Bemis).
+                  </li>
+                </ul>
+              </div>
+              <div class="pkg-footer">
+                <a class="btn btn--primary" href="mailto:contact@manuelpalenque.info?subject=Keynote%20%2F%20Commission%20Inquiry%202027">Inquire for Keynotes &amp; Commissions →</a>
+                <a class="btn" href="./speaking-and-installations.pdf" target="_blank" rel="noopener">Download Speaker &amp; Installations Dossier (PDF) ↓</a>
+              </div>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <!-- SECTION 03: QUICK TECH RIDER & LOGISTICS -->
+      <section class="row section" id="rider" aria-labelledby="rider-title">
+        <div class="rail">
+          <p class="rail-label">03 / Tech Rider &amp; Logistics</p>
+          <p class="rail-data">
+            Carry-On Fly-In Setup<br />
+            Zero Visa Friction<br />
+            45-Min Line Check
+          </p>
+        </div>
+        <div class="col">
+          <p class="eyebrow">Turnkey International Production</p>
+          <h2 id="rider-title">Compact Fly-In Technical Rider.</h2>
+
+          <div class="visa-callout">
+            <p class="visa-callout__title">✓ US Touring &amp; Visa Status</p>
+            <p class="visa-callout__text">
+              “Compact fly-in setup ready for international touring. Frequently traveling to NYC, Chicago, and Miami (US Visa active).”
+            </p>
+          </div>
+
+          <div class="rider-grid">
+            <div class="rider-box">
+              <h3>What Artist Brings (Carry-On Fly-In Rig)</h3>
+              <ul class="rider-list">
+                <li>
+                  <strong>Primary Compute Engine:</strong> Apple MacBook Pro (Apple Silicon M4 Pro / Max) running custom real-time generative visual systems (vvvv / WebGPU / GLSL shaders) and live audio engine.
+                </li>
+                <li>
+                  <strong>Tactile Control:</strong> Compact, carry-on compliant MIDI / OSC hardware controllers for real-time parameter modulation and audiovisual improvisation.
+                </li>
+                <li>
+                  <strong>Audio &amp; Lighting Interface:</strong> Low-latency balanced USB-C Audio Interface + USB-to-DMX / Art-Net interface for direct stage lighting and laser synchronization.
+                </li>
+                <li>
+                  <strong>3D Stage Digital Twin:</strong> Prior to arrival, the venue’s screen geometry and DMX fixture patch are pre-visualized in a custom 3D Digital Twin to guarantee a fast 45-minute on-site line check.
+                </li>
+              </ul>
+            </div>
+
+            <div class="rider-box">
+              <h3>What Venue Provides (Local Backline &amp; Production)</h3>
+              <ul class="rider-list">
+                <li>
+                  <strong>Audio (PA &amp; Monitoring):</strong> Professional full-range concert PA with high-headroom subwoofers (clean, undistorted sub-bass reproduction is critical); 2× active balanced DI boxes (Stereo L/R feed from artist booth) + 1× full-range stage monitor.
+                </li>
+                <li>
+                  <strong>Video (LED Wall or Projection):</strong> High-contrast LED Wall (min. 1,200 nits; custom aspect ratios supported) or Large-Scale Projection (min. 300 nits surface luminance, 10,000:1 contrast) via 1× HDMI or SDI input (1080p60 / 4K60) reaching the performance table.
+                </li>
+                <li>
+                  <strong>Lighting &amp; Darkness:</strong> Total or near-total ambient darkness (the visual language relies on absolute blacks). DMX512 / Art-Net / sACN universe line at booth for house strobes/lasers/pars + theatrical haze machine.
+                </li>
+                <li>
+                  <strong>Stage Station:</strong> 1× sturdy table (min. 120 × 60 cm) facing or onstage with the main screen + 4× grounded 110V US power outlets.
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SECTION 04: PRESS PHOTOS, BIOS & DIRECT CONTACT -->
+      <section class="row section" id="press" aria-labelledby="press-title">
+        <div class="rail">
+          <p class="rail-label">04 / Press Kit &amp; Bios</p>
+          <p class="rail-data">
+            Hi-Res Press Stills<br />
+            Copy-Ready Bios (EN)<br />
+            Direct Booking Contact
+          </p>
+        </div>
+        <div class="col">
+          <p class="eyebrow">Media Assets &amp; Curatorial Copy</p>
+          <h2 id="press-title">Downloadable Press Photos &amp; Ready-to-Copy Bios.</h2>
+
+          <div class="press-photos">
+            <figure class="press-card">
+              <img src="../assets/portfolio/colapso.webp" alt="Manuel Palenque performing Colapso live A/V show on monumental stage" width="1280" height="854" loading="lazy" />
+              <div class="press-card__meta">
+                <span class="press-card__caption">01. COLAPSO — Live Stage View (Photo: Leticia Berterre)</span>
+                <a class="btn" href="../assets/portfolio/colapso.webp" download="Manuel_Palenque_Colapso_Live_Stage.webp">Download Hi-Res ↓</a>
+              </div>
+            </figure>
+
+            <figure class="press-card">
+              <img src="../assets/curso/set.webp" alt="Manuel Palenque live A/V technical performance station" width="1134" height="1512" loading="lazy" />
+              <div class="press-card__meta">
+                <span class="press-card__caption">02. Live A/V Performance Rig &amp; Stage Setup</span>
+                <a class="btn" href="../assets/curso/set.webp" download="Manuel_Palenque_Live_AV_Rig.webp">Download Hi-Res ↓</a>
+              </div>
+            </figure>
+
+            <figure class="press-card">
+              <img src="../assets/curso/workshop.webp" alt="Syncro A/V Masterclass and stage lab at Ciclo Negro, ArtHaus Buenos Aires" width="1033" height="619" loading="lazy" />
+              <div class="press-card__meta">
+                <span class="press-card__caption">03. Syncro A/V Masterclass — ArtHaus Buenos Aires</span>
+                <a class="btn" href="../assets/curso/workshop.webp" download="Manuel_Palenque_Syncro_AV_Masterclass.webp">Download Hi-Res ↓</a>
+              </div>
+            </figure>
+
+            <figure class="press-card">
+              <img src="../assets/portfolio/manuel.jpg" alt="Portrait of Manuel Palenque" width="1116" height="1395" loading="lazy" />
+              <div class="press-card__meta">
+                <span class="press-card__caption">04. Manuel Palenque — Artist Portrait (B&amp;W)</span>
+                <a class="btn" href="../assets/portfolio/manuel.jpg" download="Manuel_Palenque_Portrait_BW.jpg">Download Hi-Res ↓</a>
+              </div>
+            </figure>
+          </div>
+
+          <div class="bio-grid">
+            <div class="bio-card">
+              <div>
+                <div class="bio-card__header">
+                  <h3 class="bio-card__title">Short Bio (100 Words — Copy &amp; Paste)</h3>
+                  <button type="button" class="btn" data-copy-target="bio-100">Copy 100w Bio</button>
+                </div>
+                <p class="bio-card__text" id="bio-100">
+                  Manuel Palenque is an Argentine Creative Technologist, Live A/V Artist, and Founder of DataRaíz with over 15 years of experience designing real-time audiovisual systems, interactive installations, and immersive stage technologies. Currently serving as Senior Creative Technologist (Immersive) at Superside and formerly Technical Video Director for Fuerza Bruta (Tokyo/Buenos Aires), his work bridges experimental electronic sound, generative shaders, and synchronized DMX/laser architectures. He has performed and taught across MUTEK, Tecnópolis, NODE Festival (Berlin), Beyond Code (Tokyo), School of Creative Media (Hong Kong), and Bright Moments (Venice), and curates the 12-hour art and technology festival Ciclo Negro in Buenos Aires.
+                </p>
+              </div>
+              <span class="press-card__caption">Approved for festival programs, club flyers &amp; university announcements</span>
+            </div>
+
+            <div class="bio-card">
+              <div>
+                <div class="bio-card__header">
+                  <h3 class="bio-card__title">Extended Institutional Bio (250 Words)</h3>
+                  <button type="button" class="btn" data-copy-target="bio-250">Copy 250w Bio</button>
+                </div>
+                <p class="bio-card__text" id="bio-250">
+                  Manuel Palenque (b. 1986, Buenos Aires; Electronic Arts, UNTREF) is a Senior Creative Technologist, Live Audiovisual Artist, and educator specializing in tightly coupled real-time sound, generative visual systems, and interactive spatial architectures. Over a 15-year international career, he has directed technical video for global theatrical phenomenon Fuerza Bruta in Tokyo and Buenos Aires, engineered FullDome 360° interactive systems for the Buenos Aires Planetarium, created monumental motion-tracked installations for Tecnópolis, Adidas NMD, and Bright Moments in Venice, and currently leads immersive and WebGPU/AI experiences as Senior Creative Technologist at Superside. In Buenos Aires, Palenque founded DataRaíz, an independent media lab for art, science, and technology, and created DataRaíz: Ciclo Negro, a flagship 12-hour festival uniting interactive installations, critical lectures, and live A/V performances at ArtHaus. On stage, his live audiovisual works—such as COLAPSO—pit algorithmic precision against entropy, using custom particle physics, SDF raymarching, and real-time audio analysis to drive large-scale LED walls, projections, and DMX/laser rigs simultaneously. A dedicated educator, he has led workshops and lectures at NODE Festival (Berlin), TECH LAB PAAK (Tokyo), Telenoika (Barcelona), and School of Creative Media (Hong Kong).
+                </p>
+              </div>
+              <span class="press-card__caption">Approved for academic keynotes, museum catalogues &amp; grant dossiers</span>
+            </div>
+          </div>
+
+          <div class="contact-cta-box" id="contact">
+            <div>
+              <p class="eyebrow" style="margin-bottom: 0.35rem;">Direct Booking, Academic Inquiries &amp; NYC Meetings (Nov 20–23, 2026)</p>
+              <a class="contact-email-big" href="mailto:contact@manuelpalenque.info?subject=NYC%20Nov%2020-23%20%2F%2F%202027%20Booking%20Inquiry">contact@manuelpalenque.info</a>
+              <p class="body" style="margin: 0.6rem 0 0; font-size: 0.92rem;">
+                In New York City (Manhattan &amp; Brooklyn) Friday, Nov 20 – Monday, Nov 23, 2026 · WhatsApp / Tel: <a href="tel:+5491166372965">+54 9 11 6637-2965</a>
+              </p>
+            </div>
+            <div style="display: flex; flex-wrap: wrap; gap: 0.65rem;">
+              <a class="btn btn--primary" href="mailto:contact@manuelpalenque.info?subject=In%20NYC%20Nov%2020-23%20%2F%2F%2015-Min%20Coffee%20or%20Studio%20Drop-In">Request 15-Min NYC Coffee (Nov 20–23) →</a>
+              <a class="btn" href="../Manuel Palenque portfolio.pdf" target="_blank" rel="noopener">Full Portfolio PDF ↗</a>
+              <a class="btn" href="https://drive.google.com/drive/folders/192TdHTU385tIgXai0DBxTlZSCykc6Fdb?usp=sharing" target="_blank" rel="noopener">Google Drive Press Kit ↗</a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <footer class="row section" style="padding-block: 2.5rem; border-bottom: 0;">
+        <div class="rail">
+          <p class="rail-label">Manuel Palenque</p>
+        </div>
+        <div class="col" style="display: flex; flex-wrap: wrap; justify-content: space-between; gap: 1rem; font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--ink-52);">
+          <span>Buenos Aires · New York · Chicago · Miami (US Visa Active)</span>
+          <span>
+            <a href="../">Portfolio</a> ·
+            <a href="../syncro-av/">Syncro A/V</a> ·
+            <a href="https://dataraiz.io" target="_blank" rel="noopener">DataRaíz</a> ·
+            <a href="https://ciclonegro.dataraiz.io" target="_blank" rel="noopener">Ciclo Negro</a>
+          </span>
+        </div>
+      </footer>
+    </main>
+
+    <script>
+      (function () {
+        const video = document.getElementById("epk-reel-video");
+        const tabs = Array.from(document.querySelectorAll(".reel-tab"));
+        const audioBtn = document.getElementById("toggle-reel-audio");
+
+        tabs.forEach((tab) => {
+          tab.addEventListener("click", () => {
+            tabs.forEach((t) => t.classList.remove("is-active"));
+            tab.classList.add("is-active");
+            const nextSrc = tab.getAttribute("data-src");
+            const nextPoster = tab.getAttribute("data-poster");
+            if (video && nextSrc) {
+              const wasMuted = video.muted;
+              video.pause();
+              if (nextPoster) video.poster = nextPoster;
+              video.src = nextSrc;
+              video.muted = wasMuted;
+              video.load();
+              const p = video.play();
+              if (p && typeof p.catch === "function") p.catch(() => {});
+            }
+          });
+        });
+
+        if (audioBtn && video) {
+          audioBtn.addEventListener("click", () => {
+            video.muted = !video.muted;
+            if (!video.muted && video.paused) {
+              const p = video.play();
+              if (p && typeof p.catch === "function") p.catch(() => {});
+            }
+            audioBtn.textContent = video.muted ? "Unmute Audio" : "Mute Audio";
+          });
+          video.addEventListener("volumechange", () => {
+            audioBtn.textContent = video.muted ? "Unmute Audio" : "Mute Audio";
+          });
+        }
+
+        const copyButtons = Array.from(document.querySelectorAll("[data-copy-target]"));
+        copyButtons.forEach((btn) => {
+          btn.addEventListener("click", () => {
+            const targetId = btn.getAttribute("data-copy-target");
+            const targetEl = targetId ? document.getElementById(targetId) : null;
+            if (!targetEl) return;
+            const text = targetEl.textContent.replace(/\s+/g, " ").trim();
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+              navigator.clipboard.writeText(text).then(() => {
+                const orig = btn.textContent;
+                btn.textContent = "Copied ✓";
+                setTimeout(() => { btn.textContent = orig; }, 1800);
+              });
+            }
+          });
+        });
+      })();
+    </script>
+  </body>
+</html>
