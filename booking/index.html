@@ -146,38 +146,11 @@
                 controls
                 playsinline
                 preload="metadata"
-                poster="../assets/curso/colapso-poster.jpg"
-                src="../assets/curso/colapso.mp4"
+                poster="../assets/videos/posters/colapso-live.jpg"
+                src="../assets/videos/colapso-live.mp4"
               ></video>
             </div>
-            <div class="reel-bar">
-              <div class="reel-tabs" role="tablist" aria-label="Select video">
-                <button
-                  class="reel-tab is-active"
-                  type="button"
-                  data-src="../assets/curso/colapso.mp4"
-                  data-poster="../assets/curso/colapso-poster.jpg"
-                >
-                  01 / Colapso — Live A/V (02:37 · Audio)
-                </button>
-                <button
-                  class="reel-tab"
-                  type="button"
-                  data-src="../Av1.mp4"
-                  data-poster="../assets/curso/workshop.webp"
-                >
-                  02 / Black Cycle Festival (Audio)
-                </button>
-                <button
-                  class="reel-tab"
-                  type="button"
-                  data-src="../assets/videos/comp/perfo.webm"
-                  data-poster="../assets/videos/posters/perfo.jpg"
-                >
-                  03 / Stage Visuals Excerpt
-                </button>
-              </div>
-            </div>
+            <figcaption>Colapso — Live A/V Performance</figcaption>
           </div>
         </div>
       </section>
@@ -350,21 +323,12 @@
     <script>
       (function () {
         const video = document.getElementById("epk-video");
-        const tabs = Array.from(document.querySelectorAll(".reel-tab"));
-        if (!video || !tabs.length) return;
-        tabs.forEach((tab) => {
-          tab.addEventListener("click", () => {
-            tabs.forEach((t) => t.classList.remove("is-active"));
-            tab.classList.add("is-active");
-            const src = tab.getAttribute("data-src");
-            const poster = tab.getAttribute("data-poster");
-            if (poster) video.setAttribute("poster", poster);
-            if (src && video.getAttribute("src") !== src) {
-              video.setAttribute("src", src);
-              video.load();
-              video.play().catch(function () {});
-            }
-          });
+        if (!video) return;
+        video.muted = false;
+        video.volume = 1;
+        video.addEventListener("play", function () {
+          video.muted = false;
+          if (video.volume === 0) video.volume = 1;
         });
       })();
     </script>
